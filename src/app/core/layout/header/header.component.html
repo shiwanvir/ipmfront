@@ -1,0 +1,83 @@
+
+<!-- Main navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="dashboard"><img src="" alt=""></a>
+
+        <ul class="nav navbar-nav visible-xs-block">
+            <li><a (click)="collapseMenu()" data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            <li><a (click)="hideMenu()" class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav">
+            <li><a (click)="collapseMenu()" class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+            <li>
+                <a (click)="hideMenu()" class="sidebar-control sidebar-main-hide hidden-xs" data-popup="tooltip" title="Hide main" data-placement="bottom" data-container="body">
+                    <i class="icon-lan3"></i>
+                </a>
+            </li>
+
+
+        </ul>
+
+        <!--<p class="navbar-text"><span class="label bg-success">Online</span></p>-->
+
+        <ul class="nav navbar-nav navbar-right">
+
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                <i class="icon-history" style="margin-right:10px"></i>
+                Recent Pages <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a routerLink="/home/source">Parent Company dsdsdsd sdsdsdsd dererer</a></li>
+                <li><a href="#">Customer</a></li>
+                <li><a href="#">Style Buyer PO</a></li>
+                <li><a href="#">Purchase Order</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                  <i class="icon-star-full2" style="margin-right:10px"></i>
+                  Bookmarks<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li *ngFor="let bookmark of bookmarks$ | async">
+                    <a [routerLink]="bookmark.url">{{ bookmark.name }}</a>
+                  </li>
+                </ul>
+              </li>
+
+          <li class="nav-item dropdown">
+            <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <i class="icon-user-plus" style="margin-right:10px"></i>
+              {{ currentUserLocation }}
+              <i class="caret"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li *ngFor="let loc of locations$ | async"><a (click)="changeLocation(loc.loc_id, loc.loc_name)"><i class="icon-user-plus" ></i>{{ loc.loc_name }}</a></li>
+            </ul>
+          </li>
+
+            <li class="dropdown dropdown-user">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="assets/images/avatar5.jpg" alt="">
+                    <span>{{ display_name }}</span>
+                    <i class="caret"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
+
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                    <li><a (click)="logout()"><i class="icon-switch2"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /main navbar -->
