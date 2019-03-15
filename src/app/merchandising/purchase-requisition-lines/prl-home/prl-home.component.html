@@ -1,0 +1,225 @@
+<div class="panel-body">
+<form [formGroup]="formHeader" (ngSubmit)="saveHeader()">
+<input type="hidden" formControlName="po_id" [(ngModel)]="poid">
+  <div class="row">
+    <div class=" col-md-12">
+      <div class=" col-md-12">
+        <div class=" col-md-3">
+          <label>Po Type<span class="text-danger">*</span>:</label>
+          <ng-select [items]="po_type$ | async"
+                  placeholder = "[Select Po type]"
+                  [selectOnTab]="true"
+                  bindLabel="po_type"
+                  [loading]="po_typeLoading"
+                  [typeahead]="po_typeInput$"
+                  [(ngModel)]="selectedPo_type"
+                  formControlName="po_type" >
+        </ng-select>
+        <span class="err">{{ formValidatorHeader.validate_field('po_type')  }}</span>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <label>PO Date:</label>
+            <input type="text" class="form-control input-xxs" bsDatepicker placement="left"
+               formControlName="po_date" placeholder="Select Date" >
+            <span class="err">{{ formValidatorHeader.validate_field('po_date')  }}</span>
+
+        </div>
+
+        <div class=" col-md-3">
+          <label>Supplier Name:</label>
+          <ng-select [items]="supplier$ | async"
+                  placeholder = "[Select Supplier]"
+                  [selectOnTab]="true"
+                  bindLabel="supplier_name"
+                  [loading]="supplierLoading"
+                  [typeahead]="supplierInput$"
+                  [(ngModel)]="selectedSupplier"
+                  formControlName="supplier" (change)="load_currency($event)" >
+        </ng-select>
+        <span class="err">{{ formValidatorHeader.validate_field('supplier')  }}</span>
+        </div>
+
+        <!-- <input type="hidden" formControlName="order_customer" [(ngModel)]="customerId"> -->
+
+        <div class=" col-md-3">
+          <label>Currency :</label>
+          <select class="form-control input-xxs" formControlName="currency">
+              <option *ngFor="let currency_list of currencyDivisions" [value]="currency_list.currency_id" [selected]="currency_list.currency_id == formHeader.get('currency').value">
+                {{ currency_list.currency_code }}
+              </option>
+          </select>
+        <span class="err">{{ formValidatorHeader.validate_field('currency')  }}</span>
+        </div>
+
+
+
+
+
+      </div>
+      <div class=" col-md-12">
+
+        <div class="col-md-3">
+
+            <label>Dilivery Date:</label>
+            <input type="text" class="form-control input-xxs" bsDatepicker placement="left"
+               formControlName="delivery_date" placeholder="Select Date" >
+            <span class="err">{{ formValidatorHeader.validate_field('delivery_date')  }}</span>
+
+        </div>
+
+        <div class=" col-md-3">
+          <label>Deliver To:</label>
+          <ng-select [items]="deliverto$ | async"
+                  placeholder = "[Select Location]"
+                  [selectOnTab]="true"
+                  bindLabel="company_name"
+                  [loading]="delivertoLoading"
+                  [typeahead]="delivertoInput$"
+                  [(ngModel)]="selectedDeliverto"
+                  formControlName="deliverto" >
+        </ng-select>
+        <span class="err">{{ formValidatorHeader.validate_field('deliverto')  }}</span>
+        </div>
+
+        <div class=" col-md-2">
+          <label>Invoice To:</label>
+          <ng-select [items]="invoiceto$ | async"
+                  placeholder = "[Select Location]"
+                  [selectOnTab]="true"
+                  bindLabel="loc_name"
+                  [loading]="invoicetoLoading"
+                  [typeahead]="invoicetoInput$"
+                  [(ngModel)]="selectedInvoiceto"
+                  formControlName="invoiceto" >
+        </ng-select>
+        <span class="err">{{ formValidatorHeader.validate_field('invoiceto')  }}</span>
+        </div>
+
+        <div class=" col-md-4">
+          <label>Special Instruction :</label>
+          <input type="text" class="form-control input-xxs" formControlName="special_ins">
+
+        </div>
+
+
+
+
+
+      </div>
+
+        <div class=" col-md-12">
+
+          <div class=" col-md-2">
+            <label>Pay Mode :</label>
+            <select class="form-control input-xxs" formControlName="pay_mode">
+              <option *ngFor="let currency_list of currencyDivisions" [value]="currency_list.payment_method_id" [selected]="currency_list.payment_method_id == formHeader.get('pay_mode').value">
+                {{ currency_list.payment_method_description }}
+              </option>
+          </select>
+        <span class="err">{{ formValidatorHeader.validate_field('pay_mode')  }}</span>
+        </div>
+
+          <div class=" col-md-2">
+            <label>Pay Term :</label>
+            <select class="form-control input-xxs" formControlName="pay_term">
+              <option *ngFor="let currency_list of currencyDivisions" [value]="currency_list.payemnt_terms" [selected]="currency_list.payemnt_terms == formHeader.get('pay_term').value">
+                {{ currency_list.payment_description }}
+              </option>
+          </select>
+        <span class="err">{{ formValidatorHeader.validate_field('pay_term')  }}</span>
+        </div>
+
+          <div class=" col-md-2">
+            <label>Ship Mode :</label>
+            <ng-select [items]="ship_mode$ | async"
+                    placeholder = "[Select Ship Mode]"
+                    [selectOnTab]="true"
+                    bindLabel="ship_mode"
+                    [loading]="ship_modeLoading"
+                    [typeahead]="ship_modeInput$"
+                    [(ngModel)]="selectedShip_mode"
+                    formControlName="ship_mode" >
+          </ng-select>
+          <span class="err">{{ formValidatorHeader.validate_field('ship_mode')  }}</span>
+
+          </div>
+
+          <div class=" col-md-2">
+            <label>Ship Term :</label>
+            <select class="form-control input-xxs" formControlName="ship_term">
+              <option *ngFor="let currency_list of currencyDivisions" [value]="currency_list.ship_term_id" [selected]="currency_list.ship_term_id == formHeader.get('ship_term').value">
+                {{ currency_list.ship_term_description }}
+              </option>
+          </select>
+        <span class="err">{{ formValidatorHeader.validate_field('ship_term')  }}</span>
+        </div>
+
+          <div class=" col-md-2">
+            <label>PO # :</label>
+            <input type="text" class="form-control input-xxs" formControlName="po_number" disabled placeholder="Auto Generate">
+            <!-- <span class="err">{{formFields.po_name}}</span> -->
+          </div>
+
+          <div class=" col-md-1">
+            <label>Status :</label>
+            <input type="text" class="form-control input-xxs" formControlName="po_status"  disabled id="status">
+            <span class="err"></span>
+          </div>
+
+          <div class=" col-md-1">
+            <label>PRL # :</label>
+            <input type="text" class="form-control input-xxs" formControlName="prl_id" disabled id="status">
+            <span class="err"></span>
+          </div>
+
+
+
+        </div>
+
+    </div>
+
+
+  <div class=" col-md-12">
+    <div class="heading-btn pull-right" style="margin-top:20px">
+
+      <div class="col-md-6">
+        <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs"  [disabled]="formHeader.invalid" >
+        <b><i class="icon-floppy-disk"></i></b> Save Header</button>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+</form>
+
+<div id="general_table">
+<legend class="text-bold" style="margin-top:20px">{{ modelTableTitle }}</legend>
+<div class="row">
+<div style="border-style:solid;border-width:1px;border-color:#DCDCDC">
+  <hot-table
+    [hotId]="instance2"
+    [settings]="hotOptions2"
+    [(data)]="dataset2">
+</hot-table>
+</div>
+</div>
+</div>
+
+<div class=" col-md-12">
+  <div class="heading-btn pull-right" style="margin-top:20px">
+
+    <div class="col-md-6">
+      <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs"  [disabled]="formHeader.invalid"  (click)="savedetails()" >
+      <b><i class="icon-floppy-disk"></i></b> Save Details</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>

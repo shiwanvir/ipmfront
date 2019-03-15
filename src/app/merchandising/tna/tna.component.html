@@ -1,0 +1,125 @@
+<form class="form-horizontal" [formGroup]="formGroup" (ngSubmit)="saveStyle()">
+  <div class="panel panel-flat">
+    <div class="panel-heading">
+      <!--<h5 class="panel-title">Style Creation</h5>-->
+      <div class="row" style="text-align:center;">
+        <h6 style="background-color:#26A69A;font-weight:bold;color:#FFF">TIME AND ACTION</h6>
+      </div>
+      <div class="heading-elements">
+        <ul class="icons-list">
+          <li><a data-action="collapse"></a></li>
+          <li><a data-action="reload"></a></li>
+          <li><a data-action="close"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <label>STYLE NO </label>
+            <ng-select [items]="style$ | async"
+                       bindLabel="style_no"
+                       [multiple]="false"
+                       [hideSelected]="true"
+                       [loading]="styleLoading"
+                       [typeahead]="styleInput$"
+                       [(ngModel)]="selectedStyle"
+                       formControlName="style">
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+
+    <div class="panel-body">
+      <div class="col-md-9">
+        <div class="row">
+
+          <div class="col-md-9">
+            <!--<select class="form-control input-xxs" formControlName="group_id" (blur)="formValidate()">-->
+            <!--<option value="">Select One ...</option>-->
+            <!--<option *ngFor="let customer of customer$ | async" [value]="customer.customer_id">-->
+            <!--{{ customer.customer_name }}-->
+            <!--</option>-->
+            <!--</select>-->
+            <!--<label>Select Department :</label>-->
+            <!--<ng-select [items]="ProductCategory$ | async"-->
+            <!--bindLabel="prod_cat_description"-->
+            <!--[multiple]="false"-->
+            <!--[hideSelected]="true"-->
+            <!--[loading]="ProductCategoryLoading"-->
+            <!--[typeahead]="ProductCategoryInput$"-->
+            <!--[(ngModel)]="selectedProductCategory"-->
+            <!--formControlName="ProductCategory">-->
+            <!--</ng-select>-->
+            <!--<table style="width:100%" border="1">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th *ngFor="let head of items[0] | keys">{{head}}</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let item of items">-->
+            <!--<td *ngFor="let list of item | keys">{{item[list]}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+          </div>
+          <!--<table>-->
+          <!--<thead>-->
+          <!--<tr>-->
+          <!--<th *ngFor="let head of items[0] | keys">{{head}}</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr *ngFor="let item of items">-->
+          <!--<td *ngFor="let list of item | keys">{{item[list]}}</td>-->
+          <!--</tr>-->
+          <!--</tbody>-->
+          <!--</table>-->
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-body">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <!--<table  border="1" class="table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th *ngFor="let head of items[0] | keys" scope="col">{{head}}</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let item of items">-->
+            <!--<td *ngFor="let list of item | keys">-->
+            <!--<p *ngIf="(item[list] == item[''])">{{item[list]}}</p>-->
+            <!--<input type="checkbox" *ngIf="(item[list] == 'v')" checked >-->
+            <!--<input type="checkbox" *ngIf="(item[list] != 'v' && item[list] != item[''])"  >-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formGroup.invalid">
+      <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+  </div>
+</form>

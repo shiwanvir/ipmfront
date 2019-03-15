@@ -1,0 +1,152 @@
+<div class="content">
+    <div class="col-md-12">
+        <div class="panel panel-flat">
+            <div class="panel-body">
+                <div class="tabbable">
+                    <div class="tab-content">
+                        <form class="form-horizontal form-validate-jquery" [formGroup]="bomForm" >
+                            <div class="tab-pane active" id="highlighted-justified-tab1">
+                                <div class="col-md-12" style="border: thin solid #e3e5e8; border-radius: 5px; box-shadow: 5px 10px #e5e6e8;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Style #<span class="text-danger">*</span></label>
+                                            <ng-select [items]="StyleList$ | async"
+                                                placeholder = "[Select Style]"
+                                                [selectOnTab]="true"
+                                                bindLabel="style_no"
+                                                bindValue="style_id"
+                                                [loading]="StyleListingLoading"
+                                                [typeahead]="StyleListInput$"
+                                                [(ngModel)]="selectedStyle"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (change)="onListCostings($event)">
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Customer<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" formControlName="ctrlCustomer" id="customer_name" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Division<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" formControlName="ctrlDivision" id="division_name" name="division_name" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Season<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" formControlName="ctrlSeason" id="season_name" name="season_name" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Product Category<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" formControlName="ctrlProduct_category" id="product_category" name="product_category" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Costing ID<span class="text-danger"></span></label>
+                                            <select formControlName="ctrlCostListing" class="form-control input-xxs set-select-general-200" name="costing_listing" id="costing_listing" (change)="getCostingDetails($event.target.value)">
+                                                <option value="-1" class="space-option">..................</option>
+                                                <option *ngFor="let costSheetList of CostSheetList$ | async" [value]="costSheetList.bulk_costing_id" class="space-option">
+                                                    {{costSheetList.CostingNo}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Style Description<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" id="style_desc" formControlName="ctrlStyleDescription" name="style_desc" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Order Qty<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" id="order_qty" formControlName="ctrlOrderQty" name="order_qty" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Style Order Qty<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" id="styleorder_qty" formControlName="ctrlstyleOrderQty" name="styleorder_qty" readonly="readonly">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>SMV<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control input-xxs" formControlName="ctrlSMV" id="smv" name="smv" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>BOM ID<span class="text-danger"></span></label>
+                                            <select formControlName="ctrlBOMListing" class="form-control input-xxs set-select-general-200" name="bom_listing" id="bom_listing" (change)="getBOMDetails($event.target.value)">
+                                                    <option value="-1" class="space-option">..................</option>
+                                                    <option *ngFor="let bomList of BOMList$ | async" [value]="bomList.bom_id" class="space-option">
+                                                        {{bomList.BomNo}}
+                                                    </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Sales Orders<span class="text-danger"></span></label>
+                                            <ng-multiselect-dropdown
+                                                [placeholder]="'Sales Orders'"
+                                                [data] = "dropdownList"
+                                                [settings]="dropdownSettings"
+                                                (onSelect) = "onItemSelect($event)"
+                                                (onDeSelect) = "onDeSelect($event)"
+                                            >
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                            <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" style="top: 23px;" id='btnLoad'(click)="generateBOM()">
+                                            <b><i class="icon-loop3"></i></b> Generate BOM</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>&nbsp;<span class="text-danger"></span></label>
+                                            <div class="row">
+                                                <div class="col-md-12" style="border: 1px solid;">
+                                                    <div class="row">
+                                                        <div class="col-md-4"><label>Fabric %<span class="text-danger"></span></label></div>                                                        
+                                                        <div class="col-md-3">
+                                                            <input type="text" class="form-control input-xxs" formControlName="ctrlFabric" id="fabperc" name="fabperc" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4"><label>Sewing Trims %<span class="text-danger"></span></label></div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" class="form-control input-xxs" formControlName="ctrlSewTrims" id="sewtrims" name="sewtrims" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4"><label>Packing Trims %<span class="text-danger"></span></label></div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" class="form-control input-xxs" formControlName="ctrlPackTrims" id="packtrims" name="packtrims" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div style="overflow-x:scroll;height: 550px;">
+                                                <div id="gridItemList" style="height: 550px; overflow: hidden; width: 1288px; border: thin solid;" class="handsontable" data-originalstyle="height: 150px; overflow: hidden; width: 900px;"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: right;">
+                                                <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" id='btnSave'(click)="save_bom()">
+                                                    <b><i class="icon-floppy-disk"></i></b> Save</button>
+                                                    &nbsp;
+                                                <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="">
+                                                        <b><i class="icon-cross"></i></b>Close</button>
+                                        </div>
+                                    </div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

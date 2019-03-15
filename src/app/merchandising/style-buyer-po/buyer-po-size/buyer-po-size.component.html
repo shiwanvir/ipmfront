@@ -1,0 +1,98 @@
+<div bsModal #sizeModel="bs-modal" class="modal fade" (onShown)="modelShowEvent($event)" >
+ <div class="modal-dialog">
+		 <div class="modal-content">
+				 <div class="modal-header  bg-teal-300">
+						 <button type="button" class="close" (click)="sizeModel.hide()">&times;</button>
+						 <h5 class="modal-title">{{ modelTitle }}</h5>
+				 </div>
+				 <div class="modal-body">
+
+           <div class="row">
+             <div class="col-md-4">
+                 <label>Delivery Order Qty : </label>
+                 <label> {{ (deliveryData == null) ? 0 : deliveryData.order_qty }}</label>
+             </div>
+             <div class="col-md-4">
+                 <label>Delivery Excess Presentage :</label>
+                 <label> {{ (deliveryData == null) ? 0 : deliveryData.excess_presentage }} % </label>
+             </div>
+             <div class="col-md-4">
+                 <label>Delivery Planned Qty  :</label>
+                 <label> {{ (deliveryData == null) ? 0 : deliveryData.planned_qty }}</label>
+             </div>
+           </div>
+
+           <div class="row">
+             <div class="col-md-4">
+                 <label>Total Order Qty : </label>
+                 <label> {{ totalOrderQty }}</label>
+             </div>
+             <div class="col-md-4">
+                 <label>Total Planned Qty : </label>
+                 <label> {{ totalPlannedQty }}</label>
+             </div>
+           </div>
+
+
+           <form [formGroup]="formSize" (ngSubmit)="saveSizes($event)">
+						 <fieldset class="content-group" *ngIf="showSizeForm">
+               <input type="hidden" formControlName="id" value="0">
+							 <div class="row">
+									 <div class="col-md-4">
+										 <label>Size <span class="text-danger">*</span> :</label>
+                     <ng-select [items]="size$ | async"
+                        placeholder = "[Select Size]"
+                        [selectOnTab]="true"
+                        bindLabel="size_name"
+                        [loading]="sizeLoading"
+                        [typeahead]="sizeInput$"
+                        formControlName="size_id">
+                      </ng-select>
+										 <span class="err">{{ formValidatorSize.validate_field('size_id')  }}</span>
+									 </div>
+									 <div class="col-md-4">
+											 <label>Order Qty <span class="text-danger">*</span> :</label>
+											 <input type="number" class="form-control input-xxs" placement="bottom"
+												 placeholder="Enter order qty" formControlName="order_qty" (keyup)="calculatePlannedQty()">
+											 <span class="err">{{ formValidatorSize.validate_field('order_qty')  }}</span>
+									 </div>
+									 <div class="col-md-4">
+											 <label>Planned Qty <span class="text-danger">*</span> :</label>
+											 <input type="number"  class="form-control input-xxs"
+												  placeholder="Enter planned qty" formControlName="planned_qty" disabled>
+											 <span class="err">{{ formValidatorSize.validate_field('planned_qty')  }}</span>
+									 </div>
+							</div>
+              <div class="row" style="margin-top:10px">
+                <div class="col-md-2" >
+                  <button type="button" class="btn bg-teal-400 btn-labeled btn-info btn-xs" (click)="clearForm()"><b><i class="icon-redo"></i></b> Clear</button>
+                </div>
+                <div class="col-md-2">
+                  <button *ngIf="!loading && !processing" type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formSize.invalid">
+  										 <b><i class="icon-floppy-disk"></i></b> Save</button>
+                </div>
+             </div>
+					</fieldset>
+          </form>
+
+           <div>
+   					<legend class="text-bold" style="margin-top:10px">Size List</legend>
+   					<div class="row">
+   						<div style="border-style:solid;border-width:1px;border-color:#DCDCDC">
+                 <hot-table
+                   [hotId]="instance"
+                   [settings]="hotOptions"
+                   [data]="dataset">
+               </hot-table>
+   						</div>
+   					</div>
+         </div>
+			</div>
+  		 <div class="modal-footer">
+				 <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="sizeModel.hide()"><b><i class="icon-cross"></i></b> Close</button>
+       </div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,14 @@
+.custom.ng-select .ng-select-container {
+     min-height: 25px !important;
+ }
+
+.custom.ng-select.ng-select-single .ng-select-container {
+    min-height: 25px !important;
+}
+.btn-xs-new {
+    padding: 3px 10px;
+    font-size: 9px;
+    line-height: 1.6666667;
+    border-radius: 2px;
+    margin: 2px;
+}
