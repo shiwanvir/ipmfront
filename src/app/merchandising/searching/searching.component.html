@@ -1,0 +1,124 @@
+<div>
+  <button (click)="openSearch()">Advanmced Searching</button>
+</div>
+
+<div bsModal #searchingModel="bs-modal" [config]="{backdrop: 'static'}"
+ class="modal fade" (onShow)="showEvent($event)" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+                <div class="modal-header  bg-teal-300">
+                    <button type="button" class="close" (click)="searchingModel.hide()">&times;</button>
+                    <h5 class="modal-title">Customer order search</h5>
+                </div>
+                <div class="modal-body">
+
+
+                  <tabset #buyerPoTabs [justified]="true">
+
+                    <tab heading="sdd">
+
+                      <div class="form-group row">
+                        <fieldset *ngFor="let item of fields; index as i" class="content-group">
+                            <label class="col-lg-3 col-form-label" >{{ item.field_description }}</label>
+                            <div class="col-lg-3">
+                              <select type="text" class="form-control input-xxs" (change)="addOperator($event, i)">
+                                <option></option>
+                                <option>% (Like)</option>
+                                <option>!% (Not like)</option>
+                                <option>> (Grater Than) </option>
+                                <option>< (Less than)</option>
+                                <option>= (Equal)</option>
+                                <option>=> (Equal or grater)</option>
+                                <option>=< (Equal or less)</option>
+                                <option>!= (Not equal)</option>
+                                <option>... (Between)</option>
+                                <option>; (or)</option>
+                              </select>
+                            </div>
+                            <div class="col-lg-5">
+                              <input type="text" class="form-control input-xxs" [value]="fields[i]['query']">
+                            </div>
+                            <div *ngIf="item.foreign_key != undefined" class="col-lg-1" (click)="loadList(item.foreign_key, item.field_description)">
+                              <span class="input-group-text" style="cursor:pointer"><i class="icon-menu6"></i></span>
+                            </div>
+                        </fieldset>
+                      </div>
+
+
+                    </tab>
+
+                    <tab heading="Customer Order" >
+
+                    </tab>
+
+                  </tabset>
+
+
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="searchingModel.hide()"><b><i class="icon-cross"></i></b> Close</button>
+                  <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="false">
+                    <b><i class="icon-floppy-disk"></i></b> Search</button>
+                </div>
+
+        </div>
+      </div>
+  </div>
+
+
+  <div bsModal #dataListModel="bs-modal" [config]="{backdrop: 'static'}"
+   class="modal fade" (onShow)="showEvent($event)" >
+      <div class="modal-dialog">
+          <div class="modal-content">
+
+                  <div class="modal-header  bg-teal-300">
+                      <button type="button" class="close" (click)="dataListModel.hide()">&times;</button>
+                      <h5 class="modal-title">{{ modelTitle }}</h5>
+                  </div>
+                  <div class="modal-body">
+
+
+
+                        <div class="form-group row">
+                          <fieldset *ngFor="let item of fields" class="content-group">
+                              <label class="col-lg-3 col-form-label" >{{ item.field_description }}</label>
+                              <div class="col-lg-3">
+          											<select type="text" class="form-control input-xxs">
+                                  <option></option>
+                                  <option>% (Like)</option>
+                                  <option>!% (Not like)</option>
+                                  <option>> (Grater Than) </option>
+                                  <option>< (Less than)</option>
+                                  <option>= (Equal)</option>
+                                  <option>=> (Equal or grater)</option>
+                                  <option>=< (Equal or less)</option>
+                                  <option>!= (Not equal)</option>
+                                  <option>... (Between)</option>
+                                  <option>; (or)</option>
+                                </select>
+          										</div>
+                              <div class="col-lg-5">
+          											<input type="text" class="form-control input-xxs">
+          										</div>
+                              <div *ngIf="item.foreign_key != undefined" class="col-lg-1" (click)="loadList(item.foreign_key)">
+          											<span class="input-group-text" style="cursor:pointer"><i class="icon-menu6"></i></span>
+          										</div>
+                          </fieldset>
+                      	</div>
+
+
+
+
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="searchingModel.hide()"><b><i class="icon-cross"></i></b> Close</button>
+                    <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="false">
+                      <b><i class="icon-floppy-disk"></i></b> Search</button>
+                  </div>
+
+          </div>
+        </div>
+    </div>

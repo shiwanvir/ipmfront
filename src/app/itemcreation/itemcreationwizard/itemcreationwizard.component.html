@@ -1,0 +1,228 @@
+<div class="content">
+  <div class="col-md-12">
+      <div class="panel panel-flat">
+          <div class="panel-heading">
+
+          </div>
+          <div class="panel-body">
+              <div class="tabbable">
+                  <div class="tab-content">
+                      <form class="form-horizontal form-validate-jquery" [formGroup]="itemForm" >
+                          <div class="tab-pane active" id="highlighted-justified-tab1">
+                              <div class="col-md-12">&nbsp;</div>
+                              <div class="col-md-12" style="border: thin solid #e3e5e8; border-radius: 5px; box-shadow: 5px 10px #e5e6e8;">
+                                  <table  width='100%' border="0">  
+                                      <tr><td colspan="7">&nbsp;</td></tr>
+                                      <tr style="height:30px; padding: 2px 5px;">
+                                          <td width='10%'>&nbsp;</td>
+                                          <td width='10%'>&nbsp;<label>Main Category <span class="text-danger">*</span> :</label></td>
+                                          <td width='25%'>
+                                              <select formControlName="category_code" class="form-control input-xxs set-select-general-200"  (change)='loadSubCategory($event.target.value)'>
+                                                <option value="-1" class='space-option'>..................</option>
+                                                <option *ngFor="let com of mainCategory$ | async" [value]="com.category_id" class='space-option'>
+                                                        {{com.category_name}}
+                                                    </option>
+                                              </select>
+                                          </td>
+                                          <td width='10%'>&nbsp;</td>
+                                          <td width='10%'>&nbsp;<label>Sub Category <span class="text-danger">*</span> :</label></td>
+                                          <td width='25%'>
+                                              <select formControlName="sub_category_code" id="sub_category_code" class="form-control input-xxs set-select-general-200" (change)='loadAssignProperties($event.target.value)'>
+                                              <option class="space-option" value="-1">..................</option>
+                                              <option *ngFor="let subCat of subCategory$ | async" [value]="subCat.subcategory_id" class="space-option">
+                                                    {{subCat.subcategory_name}}
+                                              </option>
+                                              </select>
+                                          </td>
+                                          <td width='10%'>&nbsp;</td>
+                                        </tr>
+                                        <tr><td colspan="7" style="border-bottom: thin solid #e3e5e8">&nbsp;</td></tr>
+                                        <tr><td colspan="7">&nbsp;</td></tr>
+                                        <tr id="trComposition" style="height:50px; padding: 2px 5px; border-bottom: thin solid #e3e5e8" ><td>&nbsp;</td>
+                                            <td>Fabric Composition</td>
+                                            <td colspan="2">
+                                              <select class="form-control input-xxs set-select-general" id="cmbFabComposition" >
+                                                  <option class="space-option" value="-1">------ Select Fabric Composition ------</option>
+                                                  <option *ngFor="let compo of compositionsList$ | async" [value]="compo.content_code" class="space-option">{{compo.content_description}}</option>
+                                              </select>
+                                            </td>
+                                            <td colspan="2">&nbsp;<button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="add_data" (click)="PopUpFabricComposition(template)"><b><i class="icon-plus3"></i></b>Add New</button></td>
+                                        </tr>
+                                        <tr><td colspan="7">&nbsp;</td></tr>
+                                        <tr>
+                                          <td>&nbsp;</td>
+                                          <td colspan="6" width="100%">
+
+                                          <table width="100%" border="0" id="tblPropertyValues">
+                                            <tbody>
+                                               <!--
+                                               <tr style="height:30px; padding: 2px 5px;" *ngFor="let property of assignProperties$ | async; let i = index" >
+                                                    <td width="5%" (onCreate)="myFunc()" >{{property.property_name}}</td>
+                                                    <td width="90%"><select class="form-control input-xxs" [id]="property.property_id" (cli)>
+                                                        <option>....</option>
+                                                        <option *ngFor="let propVal of propertyValueList$ | async">{{propVal.assign_value}}</option>
+                                                      </select>
+                                                    </td>
+                                                    <td width="5%"><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" [id]="property.property_id" (click)="PopUpAddPropertyValue($event.target.id, tempPropertyValue)"><b><i class="icon-plus3"></i></b>{{i}}</button></td>
+                                                </tr>
+                                                -->
+
+                                            </tbody>
+                                          </table>
+
+                                        </td>
+                                        </tr>
+                                        <tr><td colspan="7" style="height: 50px; border-bottom: thin solid #e3e5e8">&nbsp;</td></tr>
+                                        <tr><td colspan="7">&nbsp;</td></tr>
+                                        <tr style="height:30px; padding: 2px 5px;">
+                                            <td width='10%'>&nbsp;</td>
+                                            <td width='10%'>&nbsp;<label>UOM <span class="text-danger">*</span> :</label></td>
+                                            <td width='25%'>
+                                                <select formControlName="uomCtrl" class="form-control input-xxs set-select-general-200">
+                                                  <option value="-1" class="space-option">..................</option>
+                                                  <option *ngFor="let uom of UOMList$ | async" [value]="uom.uom_id" class="space-option">
+                                                          {{uom.uom_code}}
+                                                      </option>
+                                                </select>
+                                            </td>
+                                            <td width='10%'>&nbsp;</td>
+                                            <td width='10%'>&nbsp;</td>
+                                            <td width='25%'>&nbsp;</td>
+                                            <td width='10%'>&nbsp;</td>
+                                          </tr>
+                                        <tr><td colspan="7">&nbsp;</td></tr>
+                                        <tr><td colspan="5">&nbsp;</td>
+                                          <td align='right'>
+                                              <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="" >
+                                                  <b><i class="icon-cross"></i></b>Close</button>
+                                                  &nbsp;&nbsp;&nbsp;
+                                              <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="saveItem()" [disabled]="itemForm.invalid">
+                                                  <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+                                          </td>
+                                        </tr>
+                                        <tr><td colspan="7">&nbsp;</td></tr>
+                                  </table>
+                              </div>
+                          </div> <!-- End Of tab-pane active -->
+                        </form>
+                          <!-- <div bsModal #composition_modal="bs-modal" class="modal fade"> -->
+                            <ng-template #template>
+                             <!-- <div class="modal-dialog modal-md"> -->
+                                  <div class="modal-content" style="width:500px;">
+                                      <div class="modal-header bg-teal-300">
+                                          <button type="button" class="close" data-dismiss="modal" (click)="composition_modal.hide()">&times;</button>
+                                          <h5 class="modal-title">{{compositionTitle}}</h5>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div class=" col-source_hidmd-12">
+                                              <fieldset class="content-group">
+                                                  <div class="form-group">
+                                                      <table width="100%" border="1" id="tblComposition">
+                                                        <thead>
+                                                          <tr><th width="5%">&nbsp;</th>
+                                                             <th width="75%" class="header">&nbsp;Content Type</th>
+                                                             <th width="15%" class="header">Composition</th>
+                                                             <th width="5%">&nbsp;</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                          <tr *ngFor="let contentType of contentTypeList$ | async">
+                                                            <td>&nbsp;</td>
+                                                            <td class="tr-lineStyle">{{contentType.type_description}}</td>
+                                                            <td class="tr-lineStyle"><input type="text" class="form-control input-xxs" value="0" /></td>
+                                                            <td class="align-center">%</td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                  </div>
+                                              </fieldset>
+
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="" (click)="composition_modal.hide()">
+                                              <b><i class="icon-cross"></i></b>Close</button>
+
+                                          <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="saveComposition()">
+                                              <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+                                          <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="PopUpContent(tempContent)">
+                                              <b><i class="icon-floppy-disk"></i></b> Add Content</button>
+
+                                      </div>
+                                  </div>
+                              <!-- </div> -->
+                            </ng-template>
+                          <!-- </div> --> <!--End of Composition Modal-->
+
+                          <!-- <div bsModal #content_modal="bs-modal" class="modal fade"> -->
+                          <form class="form-horizontal form-validate-jquery" [formGroup]="contentForm">
+                            <ng-template #tempContent>
+                              <!-- <div class="modal-dialog modal-md"> -->
+                                  <div class="modal-content">
+                                      <div class="modal-header bg-teal-300">
+                                          <button type="button" class="close" data-dismiss="modal" (click)="content_modal.hide()">&times;</button>
+                                          <h5 class="modal-title">{{contentTitle}}</h5>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div class=" col-source_hidmd-12">
+                                              <fieldset class="content-group">
+                                                  <div class="form-group">
+                                                      <label>Content Type<span class="text-danger">*</span> :</label>
+                                                      <input type="text" formControlName="content_type" id="content_type" class="form-control input-xxs" placeholder="Enter new content type" >
+                                                  </div>
+                                              </fieldset>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="" (click)="content_modal.hide()">
+                                              <b><i class="icon-cross"></i></b>Close</button>
+
+                                          <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="saveNewContent()" [disabled]="contentForm.invalid">
+                                              <b><i class="icon-floppy-disk"></i></b> Save</button>
+                                      </div>
+                                  </div>
+                              <!-- </div> -->
+                            </ng-template>
+                          </form>  <!-- EOF Content Type -->
+
+                          <form class="form-horizontal form-validate-jquery" [formGroup]="propertyValueForm">
+                            <!-- <ng-template #tempPropertyValue id="tempValue" name="tempValue"> -->
+                              <div id="propertyValue" style="width: 500px; height: 50px; top:150px; left:350px; display:none;">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-teal-300" style="height: 50px;" >
+                                        <button type="button" class="close" data-dismiss="modal" (click)="propertyValue_modal.hide()">&times;</button>
+                                        <h5 class="modal-title" style="position: absolute; top:20px">New Property Value</h5>
+                                    </div>
+                                    <div class="modal-body" style="height: 90px;" >
+                                        <div class="col-source_hidmd-12">
+                                            <fieldset class="content-group" style="position: absolute">
+                                                <div class="form-group col-md-12" style="width: 478px" >
+                                                    <label>Property Value<span class="text-danger">*</span> :</label>
+                                                    <input type="text" formControlName="property_value" id="property_value" class="form-control input-xxs" placeholder="Enter new property value" >
+                                                    <input type="hidden" id="hndPropertyId" />
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="height: 50px;">
+                                        <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" style="position: absolute; top:150px; left: 320px;" data-dismiss="modal" id="" (click)="closePropertyValue()">
+                                            <b><i class="icon-cross"></i></b>Close</button>
+
+                                        <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" style="position: absolute; top:150px; left: 400px;" (click)="savePropertyValue()" [disabled]="propertyValueForm.invalid">
+                                            <b><i class="icon-floppy-disk"></i></b> Save</button>
+                                    </div>
+                                </div>
+                              </div>
+                            </form>
+                           <!-- </ng-template> -->
+                          <!-- </div> --> <!-- End Of Content Modal -->
+                      <!--</form> --> <!--End of Form-->
+
+                  </div> <!--End of tab-content-->
+              </div> <!--End of tabble-->
+          </div> <!--End of panel body-->
+      </div>
+   </div>
+</div>

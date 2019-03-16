@@ -1,0 +1,13 @@
+.imageDiv{
+    border-style: double;
+    width:100%;
+    height: 192px;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100%;
+    height: 192px;
+}

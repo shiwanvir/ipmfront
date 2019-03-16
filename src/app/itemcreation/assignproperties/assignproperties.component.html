@@ -1,0 +1,166 @@
+<div class="content">
+  <div class="col-md-12">
+    <div class="col-md-12">
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h6 class="panel-title">Items Property Assign</h6>
+
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="tabbable">
+                    <div class="tab-content">
+                        <form class="form-horizontal form-validate-jquery" [formGroup]="formGroup" >
+                        <div class="tab-pane active" id="highlighted-justified-tab1">
+                            
+                            <div class="col-md-12">&nbsp;</div>
+                            <div class="col-md-12">
+                                
+                                <table width='100%' border="0">
+                                    <tr>
+                                      <td width='10%'>&nbsp;</td>
+                                      <td width='10%'>&nbsp;<label>Main Category <span class="text-danger">*</span> :</label></td>
+                                      <td width='25%'>
+                                          <select formControlName="category_code" id="category_code" class="form-control input-xxs" style='width: 200px;' (change)='loadSubCategory($event.target.value)'>
+                                            <option value="-1">..................</option>
+                                            <option *ngFor="let com of mainCategory$ | async" [value]="com.category_id">
+                                                    {{com.category_name}}
+                                                </option>
+                                          </select>
+                                      </td>
+                                      <td width='10%'>&nbsp;</td>
+                                      <td width='10%'>&nbsp;<label>Sub Category <span class="text-danger">*</span> :</label></td>
+                                      <td width='25%'>
+                                          <select formControlName="sub_category_code" id="sub_category_code" class="form-control input-xxs" style='width: 200px;' (change)='loadUnAssignProperties($event.target.value)'>
+                                          <option value="-1">..................</option>
+                                          <option *ngFor="let subCat of subCategory$ | async" [value]="subCat.subcategory_id">
+                                                {{subCat.subcategory_name}}
+                                          </option>
+                                          </select>
+                                      </td>
+                                      <td width='10%'>&nbsp;</td>                                      
+                                    </tr>
+                                    <tr><td colspan="7"><hr></td></tr>
+                                    <!-- <tr><td colspan="7" height='40px'>&nbsp;</td></tr> -->
+                                    <tr><td>&nbsp;</td>
+                                        <td colspan="5" height='150px'>
+                                            <table width='100%' border="0">
+                                                <tr>
+                                                    <td width='5%' height='35px'>&nbsp;</td>
+                                                    <td><span style="font-weight: bold; text-align: center; padding: 10px 5px 10px 20px; font-size: 8pt;">Un-Assign</span></td>
+                                                    <td width='5%'>&nbsp;</td>
+                                                    <td width='16%'>&nbsp;</td>
+                                                    <td width='5%'>&nbsp;</td>
+                                                    <td><span style="font-weight: bold; text-align: center; padding: 10px 5px 10px 20px; font-size: 8pt;">Assign</span></td>
+                                                </tr>
+                                                <tr>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='27%'>
+                                                    <select name="from[]" id="multiselect1" class="form-control lisbox" size="8" multiple="multiple">                                           
+                                                        <option *ngFor="let unAssignProperties of unassignProperties$ | async" [value]="unAssignProperties.property_id">
+                                                            {{unAssignProperties.property_name}}
+                                                        </option>
+                                                    </select>
+                                                   </td> 
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='16%' align='center'>
+                                                       <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" formControlName="multiselect1_rightSelected" (click)="assignProperty()"><b><i class=" icon-arrow-right16"></i></b> Right</button>
+                                                        <p></p>
+                                                        <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" formControlName="multiselect1_leftSelected" (click)="unAssignProperty()" style="width: 70px;"><b><i class=" icon-arrow-left16"></i></b> Left </button>
+                                                    </td>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='27%'>
+                                                       <select name="to[]" id="multiselect1_to" class="form-control lisbox" size="8" multiple="multiple">
+                                                            <option *ngFor="let assignProperties of assignProperties$ | async" [value]="assignProperties.property_id">
+                                                                {{assignProperties.property_name}}
+                                                            </option>
+                                                       </select>
+                                                    </td>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='10%'align='center'><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="multiselect_up" style="width: 72px;" (click)="moveUP()"><b><i class=" icon-arrow-up16"></i></b> Up</button>
+                                                    <p></p>
+                                                    <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="multiselect_down" (click)="moveDown()"><b><i class="icon-arrow-down16"></i></b> Down</button>
+                                                    </td>    
+                                                </tr>
+                                            </table>  
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr><td colspan="7" height='25px'>&nbsp;</td></tr>
+                                    <tr><td colspan="7"><hr></td></tr>
+                                    <tr><td>&nbsp;</td>
+                                        <td colspan="5">
+                                            <table width='100%' border="0">
+                                                <tr>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='27%' align='right'><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="add_data" (click)="PopUpAssignProperties()"><b><i class="icon-plus3"></i></b>Add New</button></td> 
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='16%' align='center'>&nbsp;</td>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='27%' align='right'><button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" id="btn-save-property-assign" (click)="saveNewAssignProperties()"><b><i class="icon-floppy-disk"></i></b> Save</button></td>
+                                                   <td width='5%'>&nbsp;</td>
+                                                   <td width='10%'align='center'>&nbsp;</td>    
+                                                </tr>
+                                            </table>  
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                  </table>
+                               
+                            </div>                          
+                             
+                            <!-- Pop Up -->
+                            <div bsModal #model_new_properties="bs-modal" class="modal fade">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <!-- <form class="form-horizontal form-validate-jquery" [formGroup]="formGroup" > -->
+
+                                            <div class="modal-header bg-teal-300">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h5 class="modal-title">{{modelTitle}}</h5>
+                                            </div>
+
+                                            <div class="modal-body">                                                                                                   
+                                                <div class=" col-source_hidmd-12">
+                                                    <fieldset class="content-group">                                                            
+                                                        <div class="form-group">
+                                                            <label>Property Name<span class="text-danger">*</span> :</label>
+                                                            <input type="text" formControlName="property_name" id="property_name" class="form-control input-xxs" placeholder="Enter new property name" >
+                                                        </div>
+                                                    </fieldset>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="" (click)="model_new_properties.hide()">
+                                                    <b><i class="icon-cross"></i></b>Close</button> 
+
+                                                <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" formControlName="btn-save-property" (click)="saveNewProperty()">
+                                                    <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+                                            </div>
+                                        <!-- </form> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Pop Up -->
+                        </div>
+                       </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>  
+    </div>
+
+
+  </div>
+</div>

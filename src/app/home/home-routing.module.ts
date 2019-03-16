@@ -13,6 +13,9 @@ const routes: Routes = [
   { path : 'admin' , loadChildren : '../admin/admin.module#AdminModule' },
   { path : 'org' , loadChildren : '../org/org.module#OrgModule' },
   { path : 'finance' , loadChildren : '../finance/finance.module#FinanceModule' },
+  { path : 'merchandising' , loadChildren : '../merchandising/merchandising.module#MerchandisingModule' },
+  { path : 'itemcreation' , loadChildren : '../itemcreation/itemcreation.module#ItemcreationModule' },
+
   ];
 
 @NgModule({

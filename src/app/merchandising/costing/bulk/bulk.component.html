@@ -1,0 +1,239 @@
+<div class="panel panel-flat">
+  <div class="panel-heading">
+
+    <h5 class="panel-title">Bulk Costing</h5>
+    <div class="heading-elements">
+      <ul class="icons-list">
+        <li><a data-action="collapse"></a></li>
+        <li><a data-action="reload"></a></li>
+        <li><a data-action="close"></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel-body">
+
+    <form class="form-horizontal form-validate-jquery" [formGroup]="formHeaderGroup" (ngSubmit)="saveHeader()">
+
+      <div class="row">
+        <!-- <div class="col-md-12"> -->
+        <div class="col-md-8">
+
+          <div class="row">
+
+
+            <div class="col-md-3 col-sm-6">
+              <label>Style No <span class="text-danger">*</span>:</label>
+
+              <ng-select class="custom" [items]="style$ | async" placeholder="[Select style]" [selectOnTab]="true"
+                bindLabel="style_no" [loading]="styleLoading" [typeahead]="styleInput$" 
+                formControlName="style_id" (change)="loadStyleData()">
+              </ng-select>
+
+              <input type="hidden" formControlName="bulk_costing_id" class="form-control input-xxs">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Remark (Style No 2) <span class="text-danger"></span>:</label>
+              <input type="text" class="form-control input-xxs" formControlName="style_remark" readonly placeholder="Style Remark">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Latest revised date :</label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="last_revised_date"
+                placeholder="Last Revised Date">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Total oder quantity <span class="text-danger"></span>:</label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="total_order_qty" placeholder="Order Qty">
+
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <label>Division<span class="text-danger"></span></label>
+              <input type="hidden" formControlName="division_id" class="form-control input-xxs">
+              <input type="text" class="form-control input-xxs" readonly formControlName="division_name" placeholder="Division">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Style description<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="style_desc" placeholder="Style Description">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Customer <span class="text-danger">*</span>:</label>
+              <input type="hidden" formControlName="cust_id" class="form-control input-xxs">
+              <input type="text" class="form-control input-xxs" readonly formControlName="cust_name" placeholder="Customer">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Date created<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="created_date" readonly placeholder="Date created">
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-3 col-sm-6">
+              <label>Costed SMV<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="costed_smv_id" readonly placeholder="Costed SMV">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Country<span class="text-danger"></span></label>
+              <input type="text" class="form-control input-xxs" formControlName="country" readonly placeholder="Country">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Stage<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="bom_stage_id" placeholder="Stage">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Total cost<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="total_cost" placeholder="Total cost">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <label>Season<span class="text-danger"></span></label>
+              <ng-select [items]="seasonList$ | async" placeholder="[Select Season]" bindLabel="season_name"
+                [hideSelected]="true" formControlName="season_id">
+              </ng-select>
+
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Delivery<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="delivery" placeholder="Delivery">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Colour type<span class="text-danger">*</span></label>
+              <ng-select [items]="colorTypes$ | async" placeholder="[Select Color Type]" bindLabel="color_option"
+                [hideSelected]="true" formControlName="color_type">
+            </ng-select>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>Total FOB<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="fob" placeholder="Total FOB">
+
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="col-md-4 col-sm-12" style="padding-top: 20px">
+          <div class="thumbnail" style="margin-bottom: 5px;">
+            <img src="assets/images/leaf.jpg" alt="" style="height: 160px;width: auto" />
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <!-- <div class="col-md-12"> -->
+        <div class="col-md-8">
+          <div class="row">
+
+            <div class="col-md-3 col-sm-6">
+              <label>Consumption received<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="consumption_received_date" placeholder="Consumption received" required>
+              <span class="err" *ngIf="formHeaderGroup.controls['consumption_received_date'].errors && formHeaderGroup.controls['consumption_received_date'].invalid && formHeaderGroup.controls['consumption_received_date'].touched">saszccx</span>
+
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>PCD<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="pcd" placeholder="PCD">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label>SMV received<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="smv_received" placeholder="SMV received">
+            </div>
+
+
+            <div class="col-sm-6 col-md-3">
+              <label>Planned efficiency<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="plan_efficiency" placeholder="Planned efficiency">
+              <span class="err" > {{ appValidator.validate_field('plan_efficiency')  }} </span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-12"> -->
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <label>Cost per Std min<span class="text-danger"></span></label>
+              <input type="text" class="form-control input-xxs" formControlName="cost_per_std_min" placeholder="Cost per Std min">
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <label>EPM<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="epm" placeholder="EPM">
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <label>NP Margin<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="np_margin" placeholder="NP Margin">
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <label>Cost per Utilised minute<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="cost_per_min" placeholder="Cost per Utilised minute">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <label>SMV<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="order_smv">
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <label>SMV<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="order_smv">
+            </div>
+          </div>
+        </div>-->
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12" style="padding-top:20px;">
+            <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formHeaderGroup.invalid" ><b><i class="icon-floppy-disk"></i></b> Save</button>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
+<pre>{{formHeaderGroup.value | json}}</pre>
+<div bsModal #binModel="bs-modal" [config]="{backdrop: 'static'}" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+
+    </div>
+  </div>

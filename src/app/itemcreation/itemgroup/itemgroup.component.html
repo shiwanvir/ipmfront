@@ -1,0 +1,40 @@
+<div class="panel panel-flat">
+            <div class="panel-heading">
+
+                <h5 class="panel-title">Item Creation Wizard</h5>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+
+				<div class="tabbable">
+                        <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
+                            <li class="active"><a href="#tab_item_listing" data-toggle="tab">Item Listing</a></li>
+                            <li><a href="#tab_item_wizard" data-toggle="tab">Item Creation</a></li>
+
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane active" id="tab_item_listing">
+
+            								 <app-itemlisting></app-itemlisting>
+                            </div>
+
+                            <div class="tab-pane" id="tab_item_wizard">
+
+  								               <app-itemcreationwizard></app-itemcreationwizard>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+

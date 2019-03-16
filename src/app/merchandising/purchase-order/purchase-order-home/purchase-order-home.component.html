@@ -1,0 +1,328 @@
+
+
+    <div class="panel-body">
+        <form [formGroup]="formHeader" (ngSubmit)="saveHeader()">
+
+      <div class="row">
+        <div class=" col-md-9">
+          <legend class="text-bold">Purchase Order Header</legend>
+          <input type="hidden" formControlName="po_id" [(ngModel)]="orderId">
+          <div class=" col-md-12">
+          <div class=" col-md-4">
+            <label>PO Type <span class="text-danger">*</span>:</label>
+            <select class="form-control input-xxs" formControlName="po_type" (blur)="formValidate()" id="po_type" (change)="change_order_type()">
+              <option value="" disabled>Select One ...</option>
+              <option value="Sample" >Sample</option>
+              <option value="Bulk" >Bulk</option>
+              <option value="Re-Order" >Re-Order</option>
+              <option value="General" style="color:green;" >General</option>
+
+            </select>
+            <span class="err">{{formFieldsHeader.po_type}}</span>
+          </div>
+
+
+
+          <div class=" col-md-4">
+            <label>Delivery Location<span class="text-danger">*</span>:</label>
+            <select class="form-control input-xxs" formControlName="po_deli_loc" (blur)="formValidate()">
+              <option value="">... Select One ...</option>
+              <option *ngFor="let com of mainLocationList$ | async" [value]="com.loc_id">
+                {{com.loc_name}}
+              </option>
+            </select>
+            <span class="err">{{formFieldsHeader.po_deli_loc}}</span>
+          </div>
+
+          <div class=" col-md-4">
+            <label>Supplier Name<span class="text-danger">*</span>:</label>
+
+            <select class="form-control input-xxs" formControlName="po_sup_code" (blur)="formValidate()">
+              <option value="">... Select One ...</option>
+              <option *ngFor="let com2 of mainSuplierList$ | async" [value]="com2.supplier_id">
+                {{com2.supplier_name}}
+              </option>
+            </select>
+            <span class="err">{{formFieldsHeader.po_sup_code}}</span>
+
+          </div>
+        </div>
+          <div class=" col-md-12">
+
+          <div class=" col-md-3">
+            <label>Currency<span class="text-danger">*</span>:</label>
+            <ng-select [items]="currency$ | async"
+                    placeholder = "[Select Currency]"
+                    [selectOnTab]="true"
+                    bindLabel="currency_code"
+                    [loading]="currencyLoading"
+                    [typeahead]="currencyInput$"
+                    [(ngModel)]="selectedCurrency"
+                    formControlName="po_def_cur" (blur)="formValidate()">
+          </ng-select>
+          </div>
+
+          <div class=" col-md-3">
+            <label>Order Type :</label>
+            <select class="form-control input-xxs" formControlName="order_type" (blur)="formValidate()" id="or_type">
+              <option value="" disabled>Select One ...</option>
+              <option value="Import" >Import</option>
+              <option value="Local" >Local</option>
+
+            </select>
+            <span class="err">{{formFieldsHeader.order_type}}</span>
+          </div>
+
+          <div class=" col-md-3">
+            <label>PO # :</label>
+            <input type="text" class="form-control input-xxs" formControlName="po_number" disabled placeholder="Auto Generate" id="po_number">
+            <!-- <span class="err">{{formFields.po_name}}</span> -->
+          </div>
+
+          <div class=" col-md-3">
+            <label>Status :</label>
+            <input type="text" class="form-control input-xxs" formControlName="po_status"  disabled id="status">
+            <span class="err"></span>
+          </div>
+
+        </div>
+
+        </div>
+        <div class=" col-md-3">
+          <legend class="text-bold">Authorization</legend>
+          <div class=" col-md-12">
+
+            <div class="form-group ">
+
+              <label class="checkbox-inline ">
+                <input type="checkbox" class="styled" disabled="disabled" >
+                Required
+              </label>
+
+              <label class="checkbox-inline">
+                <input type="checkbox" class="styled" disabled="disabled">
+                Rejected
+              </label>
+            </div>
+            <legend class="text-bold"></legend>
+            <div class="form-group ">
+
+              <label class="checkbox-inline ">
+                <input type="checkbox" class="styled" disabled="disabled" >
+                Order Sent
+              </label>
+
+              <label class="checkbox-inline">
+                <input type="checkbox" class="styled" disabled="disabled">
+                Printed
+              </label>
+            </div>
+          </div>
+
+
+        <!--   <div class="heading-btn pull-right">
+            <button type="button" class="btn btn-labeled btn-primary btn-xs" style="margin-right:15px" (click)="newOrder()"><b><i class="icon-plus22"></i></b> New Order</button>
+
+            <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" style="display:block;" id="sav_hed">
+              <b><i class="icon-floppy-disk"></i></b> Save Header</button>
+            <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" style="margin-left:10px;display:none;" id="cle_hed" [disabled]="formHeader.invalid">
+              <b><i class="icon-cross"></i></b> Cancel Header</button>
+          </div> -->
+
+
+        </div>
+
+        <div class=" col-md-12">
+        <div class="heading-btn pull-right" style="margin-top:20px">
+          <div class=" col-md-6"><button type="button" class="btn btn-labeled btn-primary btn-xs" style="margin-right:15px" (click)="newOrder()">
+            <b><i class="icon-plus22"></i></b> New Order</button>  </div>
+          <div class=" col-md-6"><button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" style="display:block;" id="sav_hed">
+          <b><i class="icon-floppy-disk"></i></b> Save Header</button>
+
+          <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" style="margin-left:10px;display:none;" id="cle_hed" [disabled]="formHeader.invalid">
+            <b><i class="icon-cross"></i></b> Cancel Header</button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+  </form>
+
+<div id="general_table" style="display:none;">
+  <legend class="text-bold" style="margin-top:20px">{{ modelTableTitle }}</legend>
+  <div class="row">
+    <div style="border-style:solid;border-width:1px;border-color:#DCDCDC">
+      <hot-table
+        [hotId]="instance"
+        [settings]="hotOptions"
+        [data]="dataset">
+    </hot-table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+    <div class="panel-footer  border-top-teal-400">
+      <div class="heading-elements">
+        <!-- <span class="heading-text text-semibold">Multiple buttons:</span>
+        <div class="heading-btn pull-right">
+          <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" disabled><b><i class="icon-floppy-disk"></i></b> Save</button>
+          <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" style="margin-left:10px;" ><b><i class="icon-cross"></i></b> Cancel</button>
+        </div>-->
+      </div>
+    </div>
+
+
+
+
+
+<div bsModal #detailsModel="bs-modal" [config]="{backdrop: 'static'}"
+ class="modal fade" (onShow)="modelShowEvent($event)" >
+ <div class="modal-dialog">
+	 <form [formGroup]="formDetails" (ngSubmit)="saveDetails()">
+		 <div class="modal-content">
+
+						 <div class="modal-header  bg-teal-300">
+								 <button type="button" class="close" (click)="detailsModel.hide()">&times;</button>
+								 <h5 class="modal-title">{{ modelTableTitle }}</h5>
+						 </div>
+						 <div class="modal-body">
+               <input type="hidden"  class="form-control input-xxs"  formControlName="id">
+               <fieldset class="content-group">
+
+                 <div class="row">
+
+
+
+                   <div class="col-md-3">
+                     <div class="form-group">
+                       <label>SC Number <span class="text-danger">*</span> :</label>
+                       <input type="text"  class="form-control input-xxs"
+                         formControlName="sc_no" placeholder="SC Number" (blur)="formValidateDetails()"  id='sc_num'>
+                       <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                     </div>
+                   </div>
+
+                   <div class="col-md-3">
+                     <div class="form-group">
+                       <label>Style <span class="text-danger">*</span> :</label>
+                       <input type="text"  class="form-control input-xxs"
+                         formControlName="style" placeholder="Style" (blur)="formValidateDetails()"  id='style_num'>
+                       <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                     </div>
+                   </div>
+
+                   <div class="col-md-3">
+                     <div class="form-group">
+                       <label>Colour <span class="text-danger">*</span> :</label>
+                       <input type="text"  class="form-control input-xxs"
+                         formControlName="colour" placeholder="Colour" (blur)="formValidateDetails()"  id='colour_code'>
+                       <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                     </div>
+                   </div>
+
+
+                   <div class="col-md-3">
+                     <div class="form-group">
+                       <label>Size <span class="text-danger">*</span> :</label>
+                       <input type="text"  class="form-control input-xxs"
+                         formControlName="size" placeholder="Size" (blur)="formValidateDetails()"  id='size_item'>
+                       <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                     </div>
+                   </div>
+
+
+
+                   </div>
+
+                 <div class="row">
+                     <div class="col-md-4">
+                       <div class="form-group">
+                         <label>Item Code <span class="text-danger">*</span> :</label>
+                         <input type="text"  class="form-control input-xxs"
+                           formControlName="item_code" placeholder="Item code" (blur)="formValidateDetails()">
+                         <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                       </div>
+                     </div>
+                     <div class="col-md-4">
+                       <div class="form-group">
+                         <label>Remarks <span class="text-danger">*</span> :</label>
+                         <input type="text"  class="form-control input-xxs"
+                           formControlName="remarks" placeholder="Remarks" (blur)="formValidateDetails()">
+                         <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                       </div>
+                     </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Qty<span class="text-danger">*</span> :</label>
+                        <input type="number"  class="form-control input-xxs"
+                          formControlName="req_qty" placeholder="Qty" (blur)="formValidateDetails()">
+                        <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Unite Price <span class="text-danger">*</span> :</label>
+                        <input type="number" step=".0001" class="form-control input-xxs"
+                          formControlName="unit_price" placeholder="Unite Price" (blur)="formValidateDetails()">
+                        <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>UOM <span class="text-danger">*</span> :</label>
+                        <input type="text"  class="form-control input-xxs"
+                          formControlName="uom" placeholder="UOM" (blur)="formValidateDetails()">
+                        <!-- <span class="err">{{ formFieldsDetails.pcd }}</span> -->
+                      </div>
+                    </div>
+               </div>
+
+               <div class="row">
+                 <div class="col-md-4">
+                   <div class="form-group">
+                     <label>Delivery Date <span class="text-danger">*</span> :</label>
+                     <input type="text" class="form-control input-xxs" bsDatepicker placement="left"
+                        formControlName="deli_date" placeholder="Select Date" (blur)="formValidateDetails()">
+                     <!-- <span class="err">{{ formFieldsDetails.delivery_date }}</span> -->
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="form-group">
+                     <label>PO # :</label>
+                     <input type="text" class="form-control input-xxs" formControlName="po_no" disabled placeholder="Auto Generate" id="po_number_2">
+                     <!-- <span class="err">{{formFields.po_name}}</span> -->
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+
+                 </div>
+               </div>
+
+
+
+
+
+               </fieldset>
+						 </div>
+						 <div class="modal-footer">
+								 <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="detailsModel.hide()">
+                   <b><i class="icon-cross"></i></b> Close</button>
+								 <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs">
+										 <b><i class="icon-floppy-disk"></i></b> Add</button>
+						</div>
+
+				 </div>
+				 </form>
+		 </div>
+ </div>
