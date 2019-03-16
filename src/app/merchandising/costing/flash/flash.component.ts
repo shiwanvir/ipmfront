@@ -204,7 +204,7 @@ itemCostingForm = this.fb.group({
 
     var container = document.getElementById('gridItems');
     var self = this;
-    
+
     this.hot = new Handsontable(container, {
         data:this.data,
         columns:[{
@@ -262,7 +262,7 @@ itemCostingForm = this.fb.group({
 
       });
 
-    
+
 
     this.LoadStyles();
     this.LoadSeasons();
@@ -270,7 +270,7 @@ itemCostingForm = this.fb.group({
     this.loadUOM();
     this.LoadSuppliers();
 
-    
+
     this.hot.addHook('afterOnCellMouseDown', function(event, coords, TD){
 
         if(coords.col == 0){
@@ -285,7 +285,7 @@ itemCostingForm = this.fb.group({
 
             let grid_item_code = imgIdSplit[0];
             let grid_uom_id = imgIdSplit[1];
-            let grid_supplier_code = imgIdSplit[2];           
+            let grid_supplier_code = imgIdSplit[2];
 
             self.editItem(grid_item_code, coords.row);
 
@@ -301,9 +301,9 @@ itemCostingForm = this.fb.group({
             );
         }
     });
-   
-    this.hot.addHook('afterSetDataAtCell', function(changes, src){    
-        
+
+    this.hot.addHook('afterSetDataAtCell', function(changes, src){
+
         if(!self.changed){
             self.changed = true;
 
@@ -311,7 +311,7 @@ itemCostingForm = this.fb.group({
             let $ColumnName     = changes[0][1];
             let $ChangedValue   = changes[0][3];
             let $ColumnNumber   = self.getColumnNumber($ColumnName);
-            
+
             self.setDataInGrd($ChangedValue, $RowId, $ColumnNumber);
         }
     })
@@ -333,9 +333,9 @@ itemCostingForm = this.fb.group({
 
         case 5:
             $conPc      = this.hot.getDataAtCell(rowId,4);
-            $unitPrice  = changedValue; 
-            $wastage    = this.hot.getDataAtCell(rowId,6);      
-            
+            $unitPrice  = changedValue;
+            $wastage    = this.hot.getDataAtCell(rowId,6);
+
         break;
 
         case 6:
@@ -354,7 +354,7 @@ itemCostingForm = this.fb.group({
     let $totalRequirement   = $requirementQty + $wastageQty;
     let $totalValue         = $totalRequirement * $unitPrice;
 
-    
+
     //Set the changed value in the grid
     // ================================
     this.hot.setDataAtCell(rowId,7,$totalRequirement);
@@ -371,10 +371,10 @@ itemCostingForm = this.fb.group({
     let $totalRMValue:number = 0;
 
     for(var $iGridRows = 0; $iGridRows<this.hot.countRows(); $iGridRows++){
-        
-        $totalRMValue += this.hot.getDataAtCell($iGridRows,8);        
+
+        $totalRMValue += this.hot.getDataAtCell($iGridRows,8);
     }
-   
+
     this.total_rm_cost = $totalRMValue/$orderQty;
     this.calTotalCost();
  }
@@ -473,12 +473,12 @@ itemCostingForm = this.fb.group({
   }
 
   LoadSeasons(){
-    this.SeasonsListing$ = this.http.get<Seasons[]>(this.serverUrl + 'api/seasonlist').pipe(map(res=>res));    
+    this.SeasonsListing$ = this.http.get<Seasons[]>(this.serverUrl + 'api/seasonlist').pipe(map(res=>res));
 
   }
 
   LoadSuppliers(){
-  
+
    this.SupplierListing$ = this.http.get<Suppliers[]>(this.serverUrl + 'api/org/supplierslist/loadsuppliers').pipe(map(res=>res));
   }
 
@@ -712,7 +712,7 @@ save_costing(){
         if(data['status']!='fail'){
 
             this.costing_code = data['status'];
-           
+
             //Before save line details check if costing exist and set line items status to zero (inactive mode)
             let costingID$ = [];
             costingID$.push({"costing_id":this.costing_code});
@@ -740,7 +740,7 @@ save_costing(){
                         let grid_Wastage = this.hot.getDataAtCell(tblRowCount,6);
                         let grid_totalQty = this.hot.getDataAtCell(tblRowCount,7);
                         let grid_totalValue = this.hot.getDataAtCell(tblRowCount,8);
-                        
+
                         // Push grid data to array to save
                         itemGridData.push({"costing_id":this.costing_code,"style_code":this.style_code,"item_code":grid_item_code,"uom_id":grid_uom_id,"con_pc":grid_conpc,"unit_price":grid_unitPrice,"wastage":grid_Wastage,"total_required_qty":grid_totalQty, "total_value":grid_totalValue,"supplier_id":grid_supplier_code});
 
@@ -881,7 +881,7 @@ calTotalCost(){
             ctrlCustomer:this.customerName,
             ctrlOrderQty:data[0]['order_qty'],
             SeasonsList:data[0]['season_id'],
-            ctrlFOB:data[0]['order_fob'],           
+            ctrlFOB:data[0]['order_fob'],
         })
 
         $("#order_smv").val(data[0]['order_smv']);
@@ -1065,7 +1065,7 @@ reset_forms(){
     $("#total_rm_cost").val(0);
 
     this.style_code = -1;
-    
+
 
     while(this.data.length > 0){
         this.data.pop();

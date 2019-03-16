@@ -25,7 +25,7 @@
               <label>Style No <span class="text-danger">*</span>:</label>
 
               <ng-select class="custom" [items]="style$ | async" placeholder="[Select style]" [selectOnTab]="true"
-                bindLabel="style_no" [loading]="styleLoading" [typeahead]="styleInput$" 
+                bindLabel="style_no" [loading]="styleLoading" [typeahead]="styleInput$"
                 formControlName="style_id" (change)="loadStyleData()">
               </ng-select>
 

@@ -13,11 +13,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     //BrowserModule,
     CommonModule,
-    FormsModule,        
+    FormsModule,
     ReactiveFormsModule,
     NgSelectModule
     /*HomeModule*/
-    
+
     /*CostingRoutingModule,*/
   ],
   declarations: [FlashComponent]

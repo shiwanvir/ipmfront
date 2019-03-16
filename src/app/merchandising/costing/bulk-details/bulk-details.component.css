@@ -1,0 +1,87 @@
+.btn-xs-new {
+    padding: 3px 10px;
+    font-size: 9px;
+    line-height: 1.6666667;
+    border-radius: 2px;
+    margin: 2px;
+}
+.mTable > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+     padding: 1px 1px;
+    line-height: 1.5384616;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.input-xxs {
+    padding: 1px 2px;
+}
+.content {
+    padding: 0 10px 60px 10px !important;
+}
+.table {
+    width: 300%!important;
+     max-width: 300%!important;
+}
+.handsontable .htAutocompleteArrow {
+    color: #999999;
+    cursor: default;
+    font-size: 0;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    margin-top: -2px;
+    display: inline-block;
+    margin-right: 4px;
+     border-top: 0px !important;
+     border-right: 0px !important;
+    border-left: 0px !important;
+}
+.total{
+    padding-top: 20px;
+    background-color: #eeeeee;
+    /* position: absolute; */
+    right: 0;
+    top: -67px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+/*body {*/
+    /*margin: 0;*/
+    /*font-family: Arial, Helvetica, sans-serif;*/
+/*}*/
+
+/*.top-container {*/
+    /*background-color: #f1f1f1;*/
+    /*padding: 30px;*/
+    /*text-align: center;*/
+/*}*/
+
+/*.header {*/
+    /*padding: 10px 16px;*/
+    /*background: #555;*/
+    /*color: #f1f1f1;*/
+/*}*/
+
+/*.content {*/
+    /*padding: 16px;*/
+/*}*/
+
+/*.sticky {*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*width: 100%;*/
+/*}*/
+
+/*.sticky + .content {*/
+    /*padding-top: 102px;*/
+/*}*/
+
+/*.fixDiv{*/
+    /*position: fixed;*/
+    /*width: 100%;*/
+/*}*/
+
+/*.main_table {*/
+    /*position: absolute;*/
+    /*top: 159px;*/
+/*}*/

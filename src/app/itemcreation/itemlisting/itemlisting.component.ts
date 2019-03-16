@@ -79,7 +79,7 @@ export class ItemlistingComponent implements OnInit {
        searching:true,
 
        ajax: {
-            dataType : 'JSON',           
+            dataType : 'JSON',
             "url": this.apiUrl + "items/itemlists/loadItemList?type=datatable"
         },
         columns: [
@@ -91,7 +91,7 @@ export class ItemlistingComponent implements OnInit {
                 var str = '<i class="icon-bin" style="border-style:solid; border-width: 1px;padding:2px;cursor:pointer" data-action="DELETE" data-id="'+data+'"></i>';
                 return str;
              }
-           },           
+           },
           { data: "category_name" },
           { data: "master_description" }
        ],

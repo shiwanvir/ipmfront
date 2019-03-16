@@ -143,7 +143,7 @@ export class MasterEventComponent implements OnInit {
 
 
   formValidate(){
-    
+
   }
 
   //save and update action details

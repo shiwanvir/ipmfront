@@ -158,7 +158,7 @@ export class BulkComponent implements OnInit {
 
     /*if(!this.appValidator.validate())//if validation faild return from the function
         return;
-    
+
 
     if (this.formHeaderGroup.valid) {
       console.log("Form Submitted!");

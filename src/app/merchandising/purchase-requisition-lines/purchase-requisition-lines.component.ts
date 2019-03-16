@@ -10,7 +10,7 @@ export class PurchaseRequisitionLinesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
   onSelect(e){

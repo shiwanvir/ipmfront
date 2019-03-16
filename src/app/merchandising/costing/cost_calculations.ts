@@ -3,7 +3,7 @@ export class CostCalculations{
 
     constructor(){}
 
-    static calculateLabourCost(smv_value, factory_cpm_value){    
+    static calculateLabourCost(smv_value, factory_cpm_value){
 
         let labourCost = Number(smv_value) * Number(factory_cpm_value);
 
@@ -61,13 +61,13 @@ export class CostCalculations{
     }
 
     static calculateTotalCost(manuCost_value, financeCost_value, corporateCost_value){
-        
+
         let totalCost = manuCost_value + financeCost_value + corporateCost_value;
 
         return totalCost
     }
 
-    
 
 
-} 
+
+}

@@ -1,0 +1,443 @@
+<form class="form-horizontal" [formGroup]="formHeaderGroup" >
+  <div class="row fixDiv">
+    <div class="col-md-8">
+  <div class="panel panel-flat" #mainScreen>
+    <div class="panel-heading">
+      <div class="col-md-12">
+      <!--<h5 class="panel-title">Costing</h5>-->
+        <div class="row">
+          <div class="col-md-3 col-sm-4"><h5 class="panel-title">Costing</h5></div>
+          <div class="col-md-3 col-sm-4"><h5 class="">
+            <div class="text-muted text-size-small">
+              <span class="status-mark border-green position-left"></span>
+              Style SMV {{main_smv}}
+            </div></h5></div>
+          <div class="col-md-3 col-sm-4">
+            <h5 class="">
+              <div class="text-muted text-size-small">
+                <span class="status-mark border-green position-left"></span>
+                Style SMV {{main_smv}}
+              </div></h5>
+
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h5 class="">
+              <div class="text-muted text-size-small">
+                <span class="status-mark border-green position-left"></span>
+                Net Profit {{netProfit.toFixed(2)}}%
+              </div></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" [formGroup]="formHeaderGroup" (ngSubmit)="saveHeader()">
+
+        <div class="row sticky-top" >
+          <!-- <div class="col-md-12"> -->
+          <div class="col-md-12">
+
+            <div class="row">
+
+
+              <div class="col-md-3 col-sm-6">
+                <label>PLEASE ADD ITEM CODE# <span class="text-danger">*</span>:</label>
+                <a (click)="addItem()"  class="btn bg-success-400 btn-rounded  btn-icon btn-xs-new"><i class="">Add New Item</i></a>
+                <!--<ng-select [items]="item$ | async"-->
+                           <!--bindLabel="master_description"-->
+                           <!--[multiple]="false"-->
+                           <!--[hideSelected]="true"-->
+                           <!--[loading]="itemLoading"-->
+                           <!--[typeahead]="itemInput$"-->
+                           <!--[(ngModel)]="selecteditem"-->
+                           <!--formControlName="ItemList"-->
+                           <!--(change)="loadAllItemData()">-->
+                <!--</ng-select>-->
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                <label>Style Code <span class="text-danger"></span>:</label>
+                <div class="text-muted text-size-small">
+                  <span class="status-mark border-blue position-left"></span>
+                  {{style_code}}
+                </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                <label>Feature/Component <span class="text-danger"></span>:</label>
+                <div class="text-muted text-size-small">
+                  <span class="status-mark border-blue position-left"></span>
+                  {{main_component}}
+                </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                <label>Component Color <span class="text-danger"></span>:</label>
+                <div class="text-muted text-size-small">
+                  <span class="status-mark border-blue position-left"></span>
+                  {{main_color}}
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Division<span class="text-danger"></span></label>-->
+                <!--<input type="hidden" formControlName="division_id" id="division_id" class="form-control input-xxs">-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="division_name" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Style description<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="style_desc" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Customer <span class="text-danger">*</span>:</label>-->
+                <!--<input type="hidden" formControlName="cust_id" class="form-control input-xxs">-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="cust_name" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Date created<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="created_date" readonly >-->
+              <!--</div>-->
+
+            </div>
+
+            <div class="row">
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Costed SMV<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="costed_smv_id" readonly >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Country<span class="text-danger"></span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="country" readonly >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Stage<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="bom_stage_id" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Total cost<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="total_cost" >-->
+              <!--</div>-->
+            </div>
+
+            <div class="row">
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Season<span class="text-danger"></span></label>-->
+                <!--<ng-select [items]="seasonList$ | async"  bindLabel="season_name"-->
+                           <!--[hideSelected]="true" formControlName="season_id">-->
+                <!--</ng-select>-->
+
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Delivery<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" readonly formControlName="delivery" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Colour type<span class="text-danger">*</span></label>-->
+
+                <!--&lt;!&ndash;<ng-select [items]="colorTypes$ | async"&ndash;&gt;-->
+                <!--&lt;!&ndash;bindLabel="style_no"&ndash;&gt;-->
+                <!--&lt;!&ndash;[multiple]="false"&ndash;&gt;-->
+                <!--&lt;!&ndash;[hideSelected]="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;[loading]="colorTypesLoading"&ndash;&gt;-->
+                <!--&lt;!&ndash;[typeahead]="colorTypesInput$"&ndash;&gt;-->
+                <!--&lt;!&ndash;[(ngModel)]="selectedstyle"&ndash;&gt;-->
+                <!--&lt;!&ndash;formControlName="color_type">&ndash;&gt;-->
+                <!--&lt;!&ndash;</ng-select>&ndash;&gt;-->
+
+                <!--<ng-select [items]="colorTypes$ | async"  bindLabel="color_option"-->
+                           <!--[hideSelected]="true" formControlName="color_type">-->
+                <!--</ng-select>-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Total FOB<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" bsDatepicker formControlName="fob" >-->
+
+              <!--</div>-->
+            </div>
+
+
+
+          </div>
+
+          <!--<div class="col-md-4 col-sm-12 total"  >-->
+            <!--<div class="panel-body">-->
+            <!--&lt;!&ndash;<h3 style="    text-align: center;">summary</h3>&ndash;&gt;-->
+            <!--<div class="col-md-12 col-sm-12 " *ngFor="let subcategory of category" >-->
+            <!--<div class="col-md-6 col-sm-6" >-->
+              <!--<label style="">{{subcategory.name}} <span class="text-danger"></span>:</label>-->
+            <!--</div>-->
+              <!--<div class="col-md-6 col-sm-6" >-->
+                <!--<label style="">{{subcategory.sum}} <span class="text-danger"></span>:</label>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-6 col-sm-6" >-->
+              <!--<label style="">TOTAL<span class="text-danger"></span>:</label>-->
+            <!--</div>-->
+            <!--<div class="col-md-6 col-sm-6" style=" padding: 10px 0;">-->
+              <!--<label style="">{{total}} <span class="text-danger"></span>:</label>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        </div>
+
+        <div class="row">
+          <!-- <div class="col-md-12"> -->
+          <div class="col-md-8">
+            <div class="row">
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>Consumption received<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" bsDatepicker formControlName="consumption_received_date"-->
+                       <!--required>-->
+                <!--<span class="err" *ngIf="formHeaderGroup.controls['consumption_received_date'].errors && formHeaderGroup.controls['consumption_received_date'].invalid && formHeaderGroup.controls['consumption_received_date'].touched">saszccx</span>-->
+
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>PCD<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" bsDatepicker formControlName="pcd" >-->
+              <!--</div>-->
+
+              <!--<div class="col-md-3 col-sm-6">-->
+                <!--<label>SMV received<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" bsDatepicker formControlName="smv_received" >-->
+              <!--</div>-->
+
+
+              <!--<div class="col-sm-6 col-md-3">-->
+                <!--<label>Planned efficiency<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="plan_efficiency" >-->
+                <!--<span class="err"> {{ appValidator.validate_field('plan_efficiency') }} </span>-->
+              <!--</div>-->
+
+            </div>
+          </div>
+
+          <!--<div class="col-md-4">-->
+            <!--<div class="row">-->
+
+            <!--</div>-->
+          <!--</div>-->
+        </div>
+
+        <div class="row">
+          <!-- <div class="col-md-12"> -->
+          <div class="col-md-8">
+            <div class="row">
+              <!--<div class="col-sm-6 col-md-3">-->
+                <!--<label>Cost per Std min<span class="text-danger"></span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="cost_per_std_min" >-->
+              <!--</div>-->
+
+              <!--<div class="col-sm-6 col-md-3">-->
+                <!--<label>EPM<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="epm" >-->
+              <!--</div>-->
+
+              <!--<div class="col-sm-6 col-md-3">-->
+                <!--<label>NP Margin<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="np_margin" >-->
+              <!--</div>-->
+
+              <!--<div class="col-sm-6 col-md-3">-->
+                <!--<label>Cost per Utilised minute<span class="text-danger">*</span></label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="cost_per_min" >-->
+              <!--</div>-->
+
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <label>SMV<span class="text-danger">*</span></label>
+                <input type="text" class="form-control input-xxs" formControlName="order_smv">
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <label>SMV<span class="text-danger">*</span></label>
+                <input type="text" class="form-control input-xxs" formControlName="order_smv">
+              </div>
+            </div>
+          </div>-->
+        </div>
+
+        <!--<div class="row">-->
+          <!--<div class="col-sm-12" style="padding-top:20px;">-->
+            <!--<button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formHeaderGroup.invalid"><b><i-->
+                    <!--class="icon-floppy-disk"></i></b> Save</button>-->
+
+            <!--&nbsp;-->
+            <!--<button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs"  (click)="loadFinishGood()"><b>-->
+              <!--<i class="icon-plus3"></i></b>Add Finish Good</button>-->
+
+          <!--</div>-->
+        <!--</div>-->
+      </form>
+    </div>
+  </div>
+
+  </div>
+    <div class="col-md-4">
+      <div class="panel panel-flat" style="overflow-y: auto;" [style.height.px]="viewHeight">
+        <!--<div class="panel-heading">-->
+
+          <!--&lt;!&ndash;<h5 class="panel-title">Bulk Costing</h5>&ndash;&gt;-->
+
+        <!--</div>-->
+        <div class="panel-body">
+          <div class="col-md-12 col-sm-12 " *ngFor="let subcategory of category" >
+            <div class="col-md-4 col-sm-4" style="text-align: left;">
+              <!--<label style="text-align: right;">{{subcategory.name}}</label>-->
+              {{subcategory.name}}
+            </div>
+            <div class="col-md-4 col-sm-4" style="" >
+              <!--<label style="">{{subcategory.sum}} </label>-->
+              {{subcategory.sum.toFixed(3)}}
+            </div>
+            <div class="col-md-4 col-sm-4" style="" >
+              {{((subcategory.sum/total)*100).toFixed(1)}}%
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 "  >
+          <div class="col-md-4 col-sm-4" style="text-align: left;" >
+            Total
+            <!--<label style="text-align: right;">Total</label>-->
+          </div>
+          <div class="col-md-4 col-sm-4" style="">
+            <!--<label style="">{{total}} <span class="text-danger"></span>:</label>-->
+            {{total.toFixed(3)}}
+          </div>
+
+          <div class="col-md-4 col-sm-4" style="">100.0%
+        </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--<div class="panel-body">-->
+
+    <!--<div class="col-md-12">-->
+      <!--<div class="row">-->
+        <!--<div class="col-md-2">-->
+          <!--<label>PLEASE ADD ITEM CODE#</label>-->
+
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+          <!--<ng-select [items]="item$ | async"-->
+                     <!--bindLabel="master_description"-->
+                     <!--[multiple]="false"-->
+                     <!--[hideSelected]="true"-->
+                     <!--[loading]="itemLoading"-->
+                     <!--[typeahead]="itemInput$"-->
+                     <!--[(ngModel)]="selecteditem"-->
+                     <!--formControlName="ItemList"-->
+                     <!--(change)="loadAllItemData()">-->
+          <!--</ng-select>-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+          <!--&lt;!&ndash;<button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="getPoData(style_no.value)" >&ndash;&gt;-->
+            <!--&lt;!&ndash;<b><i class="icon-search4"></i></b> Search</button>&ndash;&gt;-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</div>-->
+  <!--</div>-->
+  <!--<legend class="text-bold" style="margin-top:10px">Item</legend>-->
+  <div class="row main_table">
+    <div >
+      <hot-table
+              [hotId]="instance"
+              [settings]="hotOptions"
+              [data]="dataset">
+      </hot-table>
+    </div>
+  </div>
+  <input type="hidden" id="url" value="{{url}}" class="form-control input-xxs">
+  <input type="hidden" id="serialblk" class="form-control input-xxs"   formControlName="serialblk">
+      <!--<form [formGroup]="form">-->
+        <!--<table class="table mTable display datatable-basic">-->
+          <!--<thead><tr>-->
+            <!--<th class="text-center">Article No </th>-->
+            <!--<th class="text-center"> Supplier </th>-->
+            <!--<th class="text-center">  Position </th>-->
+            <!--<th class="text-center">  Measurement </th>-->
+            <!--<th class="text-center">  Process Options </th>-->
+            <!--<th class="text-center">  UOM </th>-->
+            <!--<th class="text-center">  Net consumption </th>-->
+            <!--<th class="text-center">  Unit price  </th>-->
+            <!--<th class="text-center">  Wastage  </th>-->
+            <!--<th class="text-center">  Gross consumption  </th>-->
+            <!--<th class="text-center">  Freight charges  </th>-->
+            <!--<th class="text-center">  Finance charges  </th>-->
+            <!--<th class="text-center">  MOQ   </th>-->
+            <!--<th class="text-center">  Surcharge  </th>-->
+            <!--<th class="text-center">  Total cost  </th>-->
+            <!--<th class="text-center">  Shipping terms  </th>-->
+            <!--<th class="text-center">  Lead time  </th>-->
+            <!--<th class="text-center">  Country of Origin  </th>-->
+            <!--<th class="text-center">  Comments  </th>-->
+            <!--<th class="text-center">  Action  </th>-->
+          <!--</tr></thead>-->
+          <!--<ng-container formArrayName="bulk_info">-->
+            <!--<tr *ngFor="let ctrl of form.get('bulk_info')['controls']; let i = index" [formGroupName]="i">-->
+              <!--<td><input type="text" class="form-control input-xxs"   formControlName="articleNo" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td>-->
+                <!--<select id="Supplier" class="form-control input-xxs" formControlName="Supplier" (ngModelChange)="dataChanged(i)">-->
+                <!--<option *ngFor="let s of Supplier" [ngValue]="s.supplier_id">{{ s.supplier_name }}</option>-->
+              <!--</select>-->
+              <!--</td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="Position" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="number" class="form-control input-xxs" formControlName="Measurement" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td>-->
+                <!--<select id="pOptions" class="form-control input-xxs" formControlName="pOptions" (ngModelChange)="dataChanged(i)">-->
+                  <!--<option *ngFor="let p of pOptions" [ngValue]="p.service_type_id">{{ p.service_type_description }}</option>-->
+                <!--</select>-->
+              <!--</td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="UOM" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="nConsumption" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="uprice" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="Wastage" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="gConsumption" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="fCharges" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="FinCharges" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="MOQ" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="Surcharge" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="tCost" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="sTerms" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="lTime" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="countryOfOrigin" (ngModelChange)="dataChanged(i)"></td>-->
+              <!--<td><input type="text" class="form-control input-xxs" formControlName="Comments" (ngModelChange)="dataChanged(i)">-->
+                <!--<input type="hidden" class="form-control input-xxs" formControlName="action" (ngModelChange)="dataChanged(i)"></td>-->
+
+              <!--<td class="acting_2"  >-->
+                <!--<a (click)="saveBulkData(i)"  class="btn bg-success-400 btn-rounded  btn-icon btn-xs-new"><i class="letter-icon">save</i></a>-->
+                <!--<a (click)="copyBulkData(i)"  class="btn bg-primary-400 btn-rounded  btn-icon btn-xs-new"><i class="letter-icon">copy</i></a>-->
+                <!--<a (click)="delateBulkData(i)"  class="btn bg-danger-400 btn-rounded  btn-icon btn-xs-new"><i class="letter-icon">delete</i></a>-->
+              <!--</td>-->
+
+
+
+            <!--</tr>-->
+          <!--</ng-container>-->
+        <!--</table>-->
+      <!--</form>-->
+
+      <!--<pre>{{form.value | json}}</pre>-->
+</form>
+<ng-snotify class="simple"></ng-snotify>

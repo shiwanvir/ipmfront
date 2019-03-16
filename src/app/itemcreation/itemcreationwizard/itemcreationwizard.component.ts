@@ -29,12 +29,12 @@ export class ItemcreationwizardComponent implements AfterViewInit {
   //@ViewChild(ModalDirective)composition_modal : ModalDirective;
   //@ViewChild(ModalDirective)content_modal : ModalDirective;
 
-  
+
   composition_modal:BsModalRef;
   content_modal:BsModalRef;
   propertyValue_modal:BsModalRef;
 
-  itemForm:FormGroup = null  
+  itemForm:FormGroup = null
   contentForm:FormGroup = null
   propertyValueForm:FormGroup = null
   serverURL = AppConfig.apiServerUrl()
@@ -71,7 +71,7 @@ export class ItemcreationwizardComponent implements AfterViewInit {
 
    }
 
-  
+
   ngOnInit() {
 
     this.itemForm = new FormGroup({
@@ -84,17 +84,17 @@ export class ItemcreationwizardComponent implements AfterViewInit {
       content_type : new FormControl(null)
     });
 
-    this.propertyValueForm = new FormGroup({ 
+    this.propertyValueForm = new FormGroup({
       property_value : new FormControl(null)
     });
 
-    
+
     this.itemForm = this.fb.group({
 
-      category_code : [null, [Validators.required]],      
+      category_code : [null, [Validators.required]],
       sub_category_code : [null, [Validators.required]],
       //property_value : [null,[Validators.required]],
-      uomCtrl : [null, [Validators.required]]   
+      uomCtrl : [null, [Validators.required]]
     });
 
     this.contentForm = this.fb.group({
@@ -104,9 +104,9 @@ export class ItemcreationwizardComponent implements AfterViewInit {
     this.propertyValueForm = this.fb.group({
       property_value : [null, [Validators.required]]
     });
-    
 
-    
+
+
     $("#trComposition").css('display','none');
 
 
@@ -117,10 +117,10 @@ export class ItemcreationwizardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(){
-   
-  }  
 
-  PopUpFabricComposition(template: TemplateRef<any>){    
+  }
+
+  PopUpFabricComposition(template: TemplateRef<any>){
     this.composition_modal =  this.modalService.show(template,{class:'modal-sm'});
   }
 
@@ -129,7 +129,7 @@ export class ItemcreationwizardComponent implements AfterViewInit {
   }
 
   PopUpAddPropertyValue(property_id, template: TemplateRef<any>){
-      
+
     this.propertyId = property_id;
     this.propertyValue_modal = this.modalService.show(template,{class: 'propertvalue'});
     //$("#propertyValue").dialog();
@@ -144,26 +144,26 @@ export class ItemcreationwizardComponent implements AfterViewInit {
   }
 
   loadSubCategory(mainCode){
-    
+
     this.clearPropertyTable();
-    
+
     if(mainCode == 1){
       $("#trComposition").fadeIn();
     }else{
       $("#trComposition").fadeOut();
     }
-    this.subCategory$ = this.http.get<any[]>(this.serverURL + 'finance/item/get-subcatby-maincat', {params:{'category_id':mainCode}}).pipe(map(subres => subres));    
+    this.subCategory$ = this.http.get<any[]>(this.serverURL + 'finance/item/get-subcatby-maincat', {params:{'category_id':mainCode}}).pipe(map(subres => subres));
   }
 
   clearPropertyTable(){
     $("#tblPropertyValues > tbody > tr").remove();
   }
 
-  loadAssignProperties(subCatCode){    
+  loadAssignProperties(subCatCode){
     this.clearPropertyTable();
     this.assignProperties$ = this.http.get<any[]>(this.serverURL + 'itemproperty/load-assign-properties',{params:{'subcategory_code':subCatCode}})
       .pipe(map(res=>res));
-     
+
     this.assignProperties$.forEach(element => {
      for(var i =0; i<element.length;i++){
 
@@ -175,41 +175,41 @@ export class ItemcreationwizardComponent implements AfterViewInit {
         _tr += "<td width='2%'>&nbsp;</td>";
         _tr += "<td width='5%'><button type='button' class='btn bg-teal-400 btn-labeled btn-primary btn-xs' id=btn_"+_propertyId +"><b><i class='icon-plus3'></i></b>&nbsp;</button></td>";
         _tr += "<td width='2%'>&nbsp;</td>";
-        _tr += "<td width='30%'><input type='text' class='form-control input-xxs' /></td>";   
+        _tr += "<td width='30%'><input type='text' class='form-control input-xxs' /></td>";
         _tr += "<td width='1%'>&nbsp;</td>";
-        _tr += "<td width='15%'><select class='form-control input-xxs set-select-general'><option>AFTER</option><option>BEFORE</option></select></td></tr>";     
-        $("#tblPropertyValues tbody").append( _tr); 
-        
+        _tr += "<td width='15%'><select class='form-control input-xxs set-select-general'><option>AFTER</option><option>BEFORE</option></select></td></tr>";
+        $("#tblPropertyValues tbody").append( _tr);
+
         /*if(typeof(window.event) != "undefined"){
             document.getElementById('btn_'+_propertyId).addEventListener('click', this.setPropertyId);
 
         }else{
-            
+
         }*/
         document.getElementById('btn_'+_propertyId).addEventListener('click', this.setPropertyId.bind(this));
-        document.getElementById('btn_'+_propertyId).addEventListener('click', function(){ 
-                
+        document.getElementById('btn_'+_propertyId).addEventListener('click', function(){
+
             $("#propertyValue").fadeIn();
 
         });
         this.LoadPropertyValues(_propertyId);
-     }    
-     
+     }
+
     });
-    
-    
-     
+
+
+
   }
-  
+
   setPropertyId(evt){
-    
+
     var _arr_propertyID = evt.currentTarget.id.split("_");
     this.propertyId = _arr_propertyID[1];
-    
+
     $("#hndPropertyId").val(this.propertyId);
   }
 
-  closePropertyValue(){    
+  closePropertyValue(){
     $("#propertyValue").fadeOut();
   }
 
@@ -221,14 +221,14 @@ export class ItemcreationwizardComponent implements AfterViewInit {
         this.loadContentList();
         this.itemForm.reset();
       }
-      
+
       if(data['status'] == 'exist'){
         AppAlert.showWarning({title:"Content name already exist"});
         return;
       }
     });
   }
- 
+
   loadContentList(){
     this.contentTypeList$ = this.http.get<any[]>(this.serverURL + 'itemCreation/loadContent').pipe(map(res=>res));
   }
@@ -246,7 +246,7 @@ export class ItemcreationwizardComponent implements AfterViewInit {
         var  _AssignValue = element[i]["assign_value"];
 
         $("#tblPropertyValues > tbody > tr").each(function(){
-          var objSelect = $(this).find('td').eq(1).find('select');              
+          var objSelect = $(this).find('td').eq(1).find('select');
           var objSelectId = $(this).find('td').eq(1).find('select').attr('id');
 
           if(_propertyId==objSelectId){
@@ -254,13 +254,13 @@ export class ItemcreationwizardComponent implements AfterViewInit {
           }
         });
       }
-    });    
+    });
   }
 
   ClearLoadPropertyValues(_propertyId){
     $("#tblPropertyValues > tbody > tr").each(function(){
-      var objSelect = $(this).find('td').eq(1).find('select');   
-            
+      var objSelect = $(this).find('td').eq(1).find('select');
+
       var objSelectId = $(this).find('td').eq(1).find('select').attr('id');
 
       if(_propertyId==objSelectId){
@@ -296,7 +296,7 @@ export class ItemcreationwizardComponent implements AfterViewInit {
 
       if(compositionVal > 0){
         compositionDescription += " " + compositionVal + "% " + contentType;
-      }   
+      }
     });
 
     // Save composition to the item_content table
@@ -312,13 +312,13 @@ export class ItemcreationwizardComponent implements AfterViewInit {
       });
   }
 
-  savePropertyValue(){    
+  savePropertyValue(){
 
     var arrayPropertyValue = [];
-    
-    var propertyValue = $("#property_value").val(); 
-    this.propertyId = $("#hndPropertyId").val();  
-    
+
+    var propertyValue = $("#property_value").val();
+    this.propertyId = $("#hndPropertyId").val();
+
     arrayPropertyValue.push({"propertyid":this.propertyId, "propertyValue":propertyValue});
 
     this.http.post(this.serverURL + "itemCreation/savePropertyValue", arrayPropertyValue[0])
@@ -336,7 +336,7 @@ export class ItemcreationwizardComponent implements AfterViewInit {
             return;
         }
       });
-   
+
   }
 
   saveItem(){
@@ -350,10 +350,10 @@ export class ItemcreationwizardComponent implements AfterViewInit {
     var _itemPrefix = '';
     var _arrCompoistion = [];
 
-    var objFormValues =(this.itemForm.getRawValue()); 
-    var _subCatCode = objFormValues["sub_category_code"];           
-    var _mainCatCode = objFormValues["category_code"]; 
-    var _uom_code = objFormValues["uomCtrl"]; 
+    var objFormValues =(this.itemForm.getRawValue());
+    var _subCatCode = objFormValues["sub_category_code"];
+    var _mainCatCode = objFormValues["category_code"];
+    var _uom_code = objFormValues["uomCtrl"];
 
 
     // Get details of the main Category
@@ -372,15 +372,15 @@ export class ItemcreationwizardComponent implements AfterViewInit {
           _subCatPrefix = element[0]['subcategory_code'];
 
           _itemPrefix = _mainItemPrefix + "#" + _subCatPrefix + "#";
-          
+
           if(Is_Display == 1){
-              _subCatName = $("#sub_category_code option:selected").text();     
+              _subCatName = $("#sub_category_code option:selected").text();
           }
 
           if(_subCatName != ''){
             _itemDescription += _subCatName;
           }
-    
+
           if(_mainCatCode == 1){
             _fabComposition = $("#cmbFabComposition option:selected").text();
 
@@ -395,18 +395,18 @@ export class ItemcreationwizardComponent implements AfterViewInit {
                   _itemPrefix += _arrCompoistion[arrlen] + "#";
                 }
               }
-              
+
             }
           }
-    
+
           $("#tblPropertyValues > tbody > tr").each(function(){
-    
+
             //var proprtyValue = $(this).find('td').eq(1).find('select').text();
             var _proprtyValue = $(this).children('td:nth-child(2)').find('option:selected').val();
             var _optionalValue = $(this).children('td:nth-child(6)').find(':text').val()
             var _displayOption = $(this).children('td:nth-child(8)').find('option:selected').val();
-    
-            
+
+
             if(_proprtyValue != '..........'){
               _itemPrefix += _proprtyValue.substring(0,3) + "#";
               if(_optionalValue != ""){
@@ -417,11 +417,11 @@ export class ItemcreationwizardComponent implements AfterViewInit {
                 }
               }else{
                 _itemDescription += " " + _proprtyValue;
-              }   
+              }
             }
-    
+
           });
-    
+
           AppAlert.showConfirm({
             text:_itemDescription
           },
@@ -440,14 +440,14 @@ export class ItemcreationwizardComponent implements AfterViewInit {
                   AppAlert.showWarning({title:"Item already exist in the system"});
                 }else{
 
-                  // ====== Save Item ================              
+                  // ====== Save Item ================
                   _arrItem.push({"subcategory_id":_subCatCode, "master_code" : _itemPrefix, "master_description": _itemDescription, "uom_id":_uom_code, "status":1});
 
                   this.http.post(this.serverURL + "itemCreation/saveItem", _arrItem[0])
                   .subscribe(data=>{
                     if(data['status'] == 'success'){
                       AppAlert.showSuccess({text:"Successfully Saved"});
-                    
+
                     }
                   });
                   // ====== EOF Save Item ================
@@ -456,14 +456,14 @@ export class ItemcreationwizardComponent implements AfterViewInit {
               // ======= EOF Verify Item ==============
             }
           }
-          
-          );        
+
+          );
         });
 
-      
+
 
     });
   }
-  
-  
+
+
 }
