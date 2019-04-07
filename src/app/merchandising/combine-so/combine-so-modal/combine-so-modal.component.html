@@ -1,0 +1,52 @@
+<div class="table-responsive">
+
+  <form [formGroup]="modalFormGroup" (ngSubmit)="combineSo()">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Sales Orders</th>
+        <th>Color</th>
+        <th>Country</th>
+        <th>Qty</th>
+        <th>Select</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container formArrayName="soList">
+          <tr *ngFor="let column of modalFormGroup.get('soList')['controls']; let i = index;" [formGroupName]="i">
+            <td>
+              <input type="hidden" #so_no class="form-control input-xxs hidden-text" value="" formControlName="so_no">
+              {{so_no.value}}
+            </td>
+            <td>
+              <input type="hidden" #color class="form-control input-xxs hidden-text" value="" formControlName="color">
+              {{color.value}}
+            </td>
+            <td>
+              <input type="hidden" #country class="form-control input-xxs hidden-text" value="" formControlName="country">
+              {{country.value}}
+            </td>
+            <td>
+              <input type="hidden" #qty class="form-control input-xxs hidden-text" value="" formControlName="qty">
+              {{qty.value}}
+            </td>
+            <td>
+              <div class="checkbox">
+                <label><input type="checkbox" name="select" class="styled" formControlName="item_select" /></label>
+              </div>
+              <input type="hidden" name="select" formControlName="details_id" />
+              <input type="hidden" name="color_id" formControlName="color_id" />
+
+            </td>
+          </tr>
+      </ng-container>
+
+      </tbody>
+
+    </table>
+    <input type="hidden" name="color_id" formControlName="costing_id" />
+    <button type="submit" class="btn btn-primary btn-xs pull-right" >
+      <i class="icon-plus3"></i> &nbsp; Add
+    </button>
+  </form>
+</div>

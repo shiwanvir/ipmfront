@@ -18,10 +18,10 @@
                     <div class="tab-content">
                         <form class="form-horizontal form-validate-jquery" [formGroup]="formGroup" >
                         <div class="tab-pane active" id="highlighted-justified-tab1">
-
+                            
                             <div class="col-md-12">&nbsp;</div>
                             <div class="col-md-12">
-
+                                
                                 <table width='100%' border="0">
                                     <tr>
                                       <td width='10%'>&nbsp;</td>
@@ -44,7 +44,7 @@
                                           </option>
                                           </select>
                                       </td>
-                                      <td width='10%'>&nbsp;</td>
+                                      <td width='10%'>&nbsp;</td>                                      
                                     </tr>
                                     <tr><td colspan="7"><hr></td></tr>
                                     <!-- <tr><td colspan="7" height='40px'>&nbsp;</td></tr> -->
@@ -62,12 +62,12 @@
                                                 <tr>
                                                    <td width='5%'>&nbsp;</td>
                                                    <td width='27%'>
-                                                    <select name="from[]" id="multiselect1" class="form-control lisbox" size="8" multiple="multiple">
+                                                    <select name="from[]" id="multiselect1" class="form-control lisbox" size="8" multiple="multiple">                                           
                                                         <option *ngFor="let unAssignProperties of unassignProperties$ | async" [value]="unAssignProperties.property_id">
                                                             {{unAssignProperties.property_name}}
                                                         </option>
                                                     </select>
-                                                   </td>
+                                                   </td> 
                                                    <td width='5%'>&nbsp;</td>
                                                    <td width='16%' align='center'>
                                                        <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" formControlName="multiselect1_rightSelected" (click)="assignProperty()"><b><i class=" icon-arrow-right16"></i></b> Right</button>
@@ -86,9 +86,9 @@
                                                    <td width='10%'align='center'><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="multiselect_up" style="width: 72px;" (click)="moveUP()"><b><i class=" icon-arrow-up16"></i></b> Up</button>
                                                     <p></p>
                                                     <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="multiselect_down" (click)="moveDown()"><b><i class="icon-arrow-down16"></i></b> Down</button>
-                                                    </td>
+                                                    </td>    
                                                 </tr>
-                                            </table>
+                                            </table>  
                                         </td>
                                         <td>&nbsp;</td>
                                     </tr>
@@ -99,22 +99,22 @@
                                             <table width='100%' border="0">
                                                 <tr>
                                                    <td width='5%'>&nbsp;</td>
-                                                   <td width='27%' align='right'><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="add_data" (click)="PopUpAssignProperties()"><b><i class="icon-plus3"></i></b>Add New</button></td>
+                                                   <td width='27%' align='right'><button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" id="add_data" (click)="PopUpAssignProperties()"><b><i class="icon-plus3"></i></b>Add New</button></td> 
                                                    <td width='5%'>&nbsp;</td>
                                                    <td width='16%' align='center'>&nbsp;</td>
                                                    <td width='5%'>&nbsp;</td>
                                                    <td width='27%' align='right'><button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" id="btn-save-property-assign" (click)="saveNewAssignProperties()"><b><i class="icon-floppy-disk"></i></b> Save</button></td>
                                                    <td width='5%'>&nbsp;</td>
-                                                   <td width='10%'align='center'>&nbsp;</td>
+                                                   <td width='10%'align='center'>&nbsp;</td>    
                                                 </tr>
-                                            </table>
+                                            </table>  
                                         </td>
                                         <td>&nbsp;</td>
                                     </tr>
                                   </table>
-
-                            </div>
-
+                               
+                            </div>                          
+                             
                             <!-- Pop Up -->
                             <div bsModal #model_new_properties="bs-modal" class="modal fade">
                                 <div class="modal-dialog modal-md">
@@ -126,9 +126,9 @@
                                                 <h5 class="modal-title">{{modelTitle}}</h5>
                                             </div>
 
-                                            <div class="modal-body">
+                                            <div class="modal-body">                                                                                                   
                                                 <div class=" col-source_hidmd-12">
-                                                    <fieldset class="content-group">
+                                                    <fieldset class="content-group">                                                            
                                                         <div class="form-group">
                                                             <label>Property Name<span class="text-danger">*</span> :</label>
                                                             <input type="text" formControlName="property_name" id="property_name" class="form-control input-xxs" placeholder="Enter new property name" >
@@ -140,7 +140,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" data-dismiss="modal" id="" (click)="model_new_properties.hide()">
-                                                    <b><i class="icon-cross"></i></b>Close</button>
+                                                    <b><i class="icon-cross"></i></b>Close</button> 
 
                                                 <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" formControlName="btn-save-property" (click)="saveNewProperty()">
                                                     <b><i class="icon-floppy-disk"></i></b> Save</button>
@@ -158,7 +158,7 @@
                 </div>
 
             </div>
-        </div>
+        </div>  
     </div>
 
 

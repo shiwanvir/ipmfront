@@ -13,10 +13,11 @@ const routes: Routes = [
   { path : 'admin' , loadChildren : '../admin/admin.module#AdminModule' },
   { path : 'org' , loadChildren : '../org/org.module#OrgModule' },
   { path : 'finance' , loadChildren : '../finance/finance.module#FinanceModule' },
-  { path : 'merchandising' , loadChildren : '../merchandising/merchandising.module#MerchandisingModule' },
+  { path : 'ie' , loadChildren : '../ie/ie.module#IeModule' },
   { path : 'itemcreation' , loadChildren : '../itemcreation/itemcreation.module#ItemcreationModule' },
-
-  ];
+  { path : 'merchandising' , loadChildren : '../merchandising/merchandising.module#MerchandisingModule' },
+  { path : 'stores' , loadChildren : '../stores/stores.module#StoresModule' },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -13,7 +13,9 @@ declare var $:any;
 export class StyleBuyerPoListComponent implements OnInit {
 
   datatable : any = null
+  queryData = []
   readonly apiUrl:string = AppConfig.apiUrl()
+  searchingFieldsUrl = 'merchandising/customer-orders?type=search_fields';
 
   constructor(private buyerPoService : BuyerPoService) { }
 
@@ -36,11 +38,15 @@ export class StyleBuyerPoListComponent implements OnInit {
      },
      ajax: {
           dataType : 'JSON',
-          "url": this.apiUrl + "merchandising/customer-orders?type=datatable"
+          "url": this.apiUrl + "merchandising/customer-orders?type=datatable",
+          data : {
+            'query_data' : () => {return JSON.stringify(this.queryData);}
+          }
       },
        columns: [
             {
               data: "order_id",
+              width: '2%',
               render : function(data,arg,full){
                 var str = '<i class="icon-pencil" style="border-style:solid; border-width: 1px;padding:2px;cursor:pointer;margin-right:3px" data-action="EDIT" data-id="'+data+'"></i>';
                 str += '<i class="icon-bin" style="border-style:solid; border-width: 1px;padding:2px;cursor:pointer" data-action="DELETE" data-id="'+data+'"></i>';
@@ -87,6 +93,19 @@ export class StyleBuyerPoListComponent implements OnInit {
 
   delete(data) {
 
+  }
+
+
+  search(emittedData){
+    console.log(emittedData)
+    this.queryData = emittedData
+    this.datatable.search("").draw();
+  /*  this.http.post(this.apiUrl + 'app/search', {fields : queryData})
+    .subscribe(
+      data => {
+        console.log(data)
+      }
+    )*/
   }
 
 }

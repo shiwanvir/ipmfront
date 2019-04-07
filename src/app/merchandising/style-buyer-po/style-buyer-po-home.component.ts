@@ -21,7 +21,7 @@ export class StyleBuyerPoHomeComponent implements OnInit {
     .subscribe(data => {
       if(data != null){
         this.tabs.tabs[1].active = true;
-      }
+      }        
     })
 
   }

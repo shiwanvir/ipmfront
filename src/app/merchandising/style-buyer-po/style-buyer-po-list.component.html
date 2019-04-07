@@ -18,4 +18,6 @@
     </table>
   </div>
 </div>
-<!--<app-searching></app-searching>-->
+<app-searching
+[url]="searchingFieldsUrl"
+(onSearch)="search($event)"></app-searching>

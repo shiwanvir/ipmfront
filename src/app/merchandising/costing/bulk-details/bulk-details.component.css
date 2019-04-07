@@ -85,3 +85,12 @@
     /*position: absolute;*/
     /*top: 159px;*/
 /*}*/
+
+.fixed{
+    position: fixed;
+    overflow: auto;
+    z-index: 999;
+}
+.breadcrumb-line.breadcrumb-line-light.header-elements-md-inline{
+    display: none;
+}

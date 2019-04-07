@@ -1,4 +1,4 @@
 export interface Style {
-    style_id: number;
-    style_no: string;
+    style_id: number,
+    style_no: string
 }

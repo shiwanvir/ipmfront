@@ -53,7 +53,7 @@
                   <div class="panel-heading">
                     <!--<h5 class="panel-title">Style Creation</h5>-->
                     <!--<div class="row" style="text-align:center;">-->
-                      <!--<h6 style="background-color:#26A69A;font-weight:bold;color:#FFF">STYLE CREATION</h6>-->
+                    <!--<h6 style="background-color:#26A69A;font-weight:bold;color:#FFF">STYLE CREATION</h6>-->
                     <!--</div>-->
                     <div class="heading-elements">
                       <ul class="icons-list">
@@ -150,7 +150,7 @@
                         <div class="col-md-6">
                           <label>Division</label>
                           <ng-select [items]="Division$ | async"
-                                     bindLabel="division_code"
+                                     bindLabel="division_description"
                                      [multiple]="false"
                                      [hideSelected]="true"
                                      [loading]="DivisionLoading"
@@ -180,31 +180,12 @@
                   </div>
 
 
-                  <div class="panel-body">
-                    <div class="col-md-9">
-                      <div class="row">
 
-                        <div class="col-md-9">
 
-                        </div>
-
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="panel-body">
-                    <div class="col-md-12">
-                      <div class="row">
-                        <div class="col-md-12">
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formGroup.invalid">
-                    <b><i class="icon-floppy-disk"></i></b> Save</button>
+                  <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="sectionModel.hide()"><b><i class="icon-cross"></i></b>Close</button>
+                  <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formGroup.invalid"><b><i class="icon-floppy-disk"></i></b> Save</button>
 
                 </div>
               </form>

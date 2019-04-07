@@ -1,5 +1,5 @@
 <form class="form-horizontal" [formGroup]="formHeaderGroup" >
-  <div class="row fixDiv">
+  <div class="row fixDiv card sticky-top">
     <div class="col-md-8">
   <div class="panel panel-flat" #mainScreen>
     <div class="panel-heading">
@@ -33,7 +33,7 @@
     <div class="panel-body">
       <form class="form-horizontal" [formGroup]="formHeaderGroup" (ngSubmit)="saveHeader()">
 
-        <div class="row sticky-top" >
+        <div class="row sticky-top" [class.fixed]="" >
           <!-- <div class="col-md-12"> -->
           <div class="col-md-12">
 

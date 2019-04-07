@@ -1,7 +1,7 @@
 <div class="panel panel-flat">
   <div class="panel-heading">
 
-    <h5 class="panel-title">Bulk Costing</h5>
+    <h5 class="panel-title">Costing</h5>
     <div class="heading-elements">
       <ul class="icons-list">
         <li><a data-action="collapse"></a></li>
@@ -11,8 +11,7 @@
     </div>
   </div>
   <div class="panel-body">
-
-    <form class="form-horizontal form-validate-jquery" [formGroup]="formHeaderGroup" (ngSubmit)="saveHeader()">
+    <form class="form-horizontal" [formGroup]="formHeaderGroup" (ngSubmit)="saveHeader()">
 
       <div class="row">
         <!-- <div class="col-md-12"> -->
@@ -24,28 +23,39 @@
             <div class="col-md-3 col-sm-6">
               <label>Style No <span class="text-danger">*</span>:</label>
 
-              <ng-select class="custom" [items]="style$ | async" placeholder="[Select style]" [selectOnTab]="true"
-                bindLabel="style_no" [loading]="styleLoading" [typeahead]="styleInput$"
-                formControlName="style_id" (change)="loadStyleData()">
+              <!--<ng-select class="custom" [items]="style$ | async" placeholder="[Select style]" [selectOnTab]="true"-->
+                <!--bindLabel="style_no" [loading]="styleLoading" [typeahead]="styleInput$" [(ngModel)]="selectedstyle"-->
+                <!--formControlName="style_id" (change)="loadStyleData()">-->
+              <!--</ng-select>-->
+              <ng-select [items]="style$ | async"
+                         bindLabel="style_no"
+                         [multiple]="false"
+                         [hideSelected]="true"
+                         [loading]="styleLoading"
+                         [typeahead]="styleInput$"
+                         [(ngModel)]="selectedstyle"
+                         formControlName="Style"
+                         (change)="loadStyleData()">
               </ng-select>
 
-              <input type="hidden" formControlName="bulk_costing_id" class="form-control input-xxs">
+              <!--<input type="hidden" formControlName="bulk_costing_id" class="form-control input-xxs">-->
+              <input type="hidden" id="url" value="{{url}}" class="form-control input-xxs">
             </div>
 
             <div class="col-md-3 col-sm-6">
               <label>Remark (Style No 2) <span class="text-danger"></span>:</label>
-              <input type="text" class="form-control input-xxs" formControlName="style_remark" readonly placeholder="Style Remark">
+              <input type="text" class="form-control input-xxs" formControlName="style_remark" readonly >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Latest revised date :</label>
+              <label>Latest Revised Date :</label>
               <input type="text" class="form-control input-xxs" readonly formControlName="last_revised_date"
-                placeholder="Last Revised Date">
+                >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Total oder quantity <span class="text-danger"></span>:</label>
-              <input type="text" class="form-control input-xxs" readonly formControlName="total_order_qty" placeholder="Order Qty">
+              <label>Total Oder Quantity <span class="text-danger"></span>:</label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="total_order_qty" >
 
             </div>
 
@@ -54,24 +64,24 @@
           <div class="row">
             <div class="col-md-3 col-sm-6">
               <label>Division<span class="text-danger"></span></label>
-              <input type="hidden" formControlName="division_id" class="form-control input-xxs">
-              <input type="text" class="form-control input-xxs" readonly formControlName="division_name" placeholder="Division">
+              <input type="hidden" formControlName="division_id" id="division_id" class="form-control input-xxs">
+              <input type="text" class="form-control input-xxs" readonly formControlName="division_name" >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Style description<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" readonly formControlName="style_desc" placeholder="Style Description">
+              <label>Style Description<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="style_desc" >
             </div>
 
             <div class="col-md-3 col-sm-6">
               <label>Customer <span class="text-danger">*</span>:</label>
               <input type="hidden" formControlName="cust_id" class="form-control input-xxs">
-              <input type="text" class="form-control input-xxs" readonly formControlName="cust_name" placeholder="Customer">
+              <input type="text" class="form-control input-xxs" readonly formControlName="cust_name" >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Date created<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="created_date" readonly placeholder="Date created">
+              <label>Date Created<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="created_date" readonly >
             </div>
 
           </div>
@@ -80,29 +90,38 @@
 
             <div class="col-md-3 col-sm-6">
               <label>Costed SMV<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="costed_smv_id" readonly placeholder="Costed SMV">
+              <input type="text" class="form-control input-xxs" formControlName="costed_smv_id" readonly >
             </div>
 
             <div class="col-md-3 col-sm-6">
               <label>Country<span class="text-danger"></span></label>
-              <input type="text" class="form-control input-xxs" formControlName="country" readonly placeholder="Country">
+              <input type="text" class="form-control input-xxs" formControlName="country" readonly >
             </div>
 
             <div class="col-md-3 col-sm-6">
               <label>Stage<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" readonly formControlName="bom_stage_id" placeholder="Stage">
+              <ng-select [items]="BomStage$ | async"  bindLabel="bom_stage_description"
+                         [hideSelected]="true" formControlName="bom_stage">
+              </ng-select>
+              <!--<select class="form-control input-xxs" id="gender" formControlName="bom_stage_id" >-->
+                <!--<option value="Bulk Costing">Bulk Costing</option>-->
+                <!--<option value="Bulk Costing">Development</option>-->
+                <!--<option value="Bulk Costing">Proto</option>-->
+                <!--<option value="Sample">Sample</option>-->
+              <!--</select>-->
+              <!--<input type="text" class="form-control input-xxs" readonly formControlName="bom_stage_id" >-->
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Total cost<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" readonly formControlName="total_cost" placeholder="Total cost">
+              <label>Total Cost<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" readonly formControlName="total_cost" >
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-3 col-sm-6">
               <label>Season<span class="text-danger"></span></label>
-              <ng-select [items]="seasonList$ | async" placeholder="[Select Season]" bindLabel="season_name"
+              <ng-select [items]="seasonList$ | async"  bindLabel="season_name"
                 [hideSelected]="true" formControlName="season_id">
               </ng-select>
 
@@ -110,19 +129,30 @@
 
             <div class="col-md-3 col-sm-6">
               <label>Delivery<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" readonly formControlName="delivery" placeholder="Delivery">
+              <input type="text" class="form-control input-xxs" readonly formControlName="delivery" >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>Colour type<span class="text-danger">*</span></label>
-              <ng-select [items]="colorTypes$ | async" placeholder="[Select Color Type]" bindLabel="color_option"
+              <label>Colour Type<span class="text-danger">*</span></label>
+
+              <!--<ng-select [items]="colorTypes$ | async"-->
+                         <!--bindLabel="style_no"-->
+                         <!--[multiple]="false"-->
+                         <!--[hideSelected]="true"-->
+                         <!--[loading]="colorTypesLoading"-->
+                         <!--[typeahead]="colorTypesInput$"-->
+                         <!--[(ngModel)]="selectedstyle"-->
+                         <!--formControlName="color_type">-->
+              <!--</ng-select>-->
+
+              <ng-select [items]="colorTypes$ | async"  bindLabel="color_option"
                 [hideSelected]="true" formControlName="color_type">
-            </ng-select>
+              </ng-select>
             </div>
 
             <div class="col-md-3 col-sm-6">
               <label>Total FOB<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="fob" placeholder="Total FOB">
+              <input type="text" class="form-control input-xxs"  formControlName="fob" >
 
             </div>
           </div>
@@ -133,40 +163,48 @@
 
         <div class="col-md-4 col-sm-12" style="padding-top: 20px">
           <div class="thumbnail" style="margin-bottom: 5px;">
-            <img src="assets/images/leaf.jpg" alt="" style="height: 160px;width: auto" />
+            <img [src]="imgSrc" alt="" style="height: 160px;width: auto" />
           </div>
         </div>
 
       </div>
-
+      <input type="hidden" formControlName="bulk_header" class="form-control input-xxs"  id="bulk_header">
 
       <div class="row">
         <!-- <div class="col-md-12"> -->
         <div class="col-md-8">
           <div class="row">
 
-            <div class="col-md-3 col-sm-6">
-              <label>Consumption received<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="consumption_received_date" placeholder="Consumption received" required>
-              <span class="err" *ngIf="formHeaderGroup.controls['consumption_received_date'].errors && formHeaderGroup.controls['consumption_received_date'].invalid && formHeaderGroup.controls['consumption_received_date'].touched">saszccx</span>
+            <!--<div class="col-md-3 col-sm-6">-->
+              <!--<label>Consumption received<span class="text-danger">*</span></label>-->
+              <!--<input type="text" class="form-control input-xxs" bsDatepicker formControlName="consumption_received_date"-->
+                 <!--required>-->
+              <!--<span class="err" *ngIf="formHeaderGroup.controls['consumption_received_date'].errors && formHeaderGroup.controls['consumption_received_date'].invalid && formHeaderGroup.controls['consumption_received_date'].touched">saszccx</span>-->
 
-            </div>
+            <!--</div>-->
 
             <div class="col-md-3 col-sm-6">
               <label>PCD<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="pcd" placeholder="PCD">
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="pcd" >
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <label>SMV received<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="smv_received" placeholder="SMV received">
+              <label>SMV Received<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" bsDatepicker formControlName="smv_received" >
             </div>
 
 
             <div class="col-sm-6 col-md-3">
-              <label>Planned efficiency<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="plan_efficiency" placeholder="Planned efficiency">
-              <span class="err" > {{ appValidator.validate_field('plan_efficiency')  }} </span>
+              <label>Planned Efficiency<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="plan_efficiency" >
+              <span class="err"> {{ appValidator.validate_field('plan_efficiency') }} </span>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+            <label>Finance Charges<span class="text-danger">*</span></label>
+            <input type="text" class="form-control input-xxs"  formControlName="finance_charges" >
+            <!--<span class="err" *ngIf="formHeaderGroup.controls['consumption_received_date'].errors && formHeaderGroup.controls['consumption_received_date'].invalid && formHeaderGroup.controls['consumption_received_date'].touched">saszccx</span>-->
+
             </div>
 
           </div>
@@ -184,23 +222,23 @@
         <div class="col-md-8">
           <div class="row">
             <div class="col-sm-6 col-md-3">
-              <label>Cost per Std min<span class="text-danger"></span></label>
-              <input type="text" class="form-control input-xxs" formControlName="cost_per_std_min" placeholder="Cost per Std min">
+              <label>Cost Per Std Min<span class="text-danger"></span></label>
+              <input type="text" class="form-control input-xxs" formControlName="cost_per_std_min" >
             </div>
 
             <div class="col-sm-6 col-md-3">
               <label>EPM<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="epm" placeholder="EPM">
+              <input type="text" class="form-control input-xxs" formControlName="epm" >
             </div>
 
             <div class="col-sm-6 col-md-3">
               <label>NP Margin<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="np_margin" placeholder="NP Margin">
+              <input type="text" class="form-control input-xxs" formControlName="np_margin" >
             </div>
 
             <div class="col-sm-6 col-md-3">
-              <label>Cost per Utilised minute<span class="text-danger">*</span></label>
-              <input type="text" class="form-control input-xxs" formControlName="cost_per_min" placeholder="Cost per Utilised minute">
+              <label>Cost Per Utilised Minute<span class="text-danger">*</span></label>
+              <input type="text" class="form-control input-xxs" formControlName="cost_per_min" >
             </div>
 
           </div>
@@ -223,17 +261,358 @@
 
       <div class="row">
         <div class="col-sm-12" style="padding-top:20px;">
-            <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formHeaderGroup.invalid" ><b><i class="icon-floppy-disk"></i></b> Save</button>
-          </div>
+          <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" [disabled]="formHeaderGroup.invalid"><b><i
+                class="icon-floppy-disk"></i></b> Save</button>
+
+          &nbsp;
+          <button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs"  (click)="loadFinishGood()"><b>
+            <i class="icon-plus3"></i></b>Add Finish Good</button>
+
+        </div>
       </div>
     </form>
   </div>
 </div>
-<pre>{{formHeaderGroup.value | json}}</pre>
-<div bsModal #binModel="bs-modal" [config]="{backdrop: 'static'}" class="modal fade">
+<!-- <pre>{{formHeaderGroup.value | json}}</pre> -->
+<legend class="text-bold" style="margin-top:10px">Main Lines</legend>
+<div class="row">
+  <div style="border-style:solid;border-width:1px;border-color:#DCDCDC">
+    <hot-table
+            [hotId]="instance"
+            [settings]="hotOptions"
+            [data]="dataset">
+    </hot-table>
+  </div>
+</div>
+<ng-snotify class="simple"></ng-snotify>
+<!--<ng-container *ngIf="show">-->
+<!--<div class="panel panel-flat">-->
+  <!--<div class="panel-heading">-->
+
+    <!--<h5 class="panel-title">Raw Material information</h5>-->
+    <!---->
+  <!--</div>-->
+  <!--<div class="panel-body" id="mainDiv">-->
+
+    <!--<div class="col-md-12">-->
+      <!--<div class="text-right">-->
+        <!--&lt;!&ndash;<button type="button" class="btn bg-teal-400 btn-labeled btn-primary btn-xs" (click)="saveStatus = 'SAVE';lineModel.show()"><b>&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="icon-plus3"></i></b>Add New</button>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="modal-dialog modal-lg">-->
+      <!--<div class="modal-content">-->
+        <!--<div class="panel-body">-->
+          <!--<form [formGroup]="form">-->
+            <!--<table class="table display datatable-basic">-->
+              <!--<thead><tr> <th class="text-center">PACK </th><th class="text-center"> FEATURE </th><th class="text-center"> COMPONENT </th><th class="text-center">  COLOR </th><th class="text-center"> SURCHARGE </th><th class="text-center">  MCQ </th><th class="text-center">  ACTION </th></tr></thead>-->
+              <!--<ng-container formArrayName="bulk_info">-->
+                <!--<tr *ngFor="let ctrl of form.get('bulk_info')['controls']; let i = index" [formGroupName]="i">-->
+                  <!--<td><input type="text" class="form-control input-xxs"  [readonly]="true" formControlName="pack"></td>-->
+                  <!--<td>-->
+                    <!--<input type="text" class="form-control input-xxs" formControlName="component">-->
+                    <!--<input type="hidden" class="form-control input-xxs" formControlName="component_id">-->
+                  <!--</td>-->
+                  <!--<td><select id="color" class="form-control input-xxs" formControlName="color">-->
+                    <!--<option *ngFor="let c of color" [ngValue]="c">{{ c.color_code }}</option>-->
+                  <!--</select></td>-->
+                  <!--<td><input type="checkbox"  class="form-control input-xxs" formControlName="surcharge" /> </td>-->
+                  <!--<td><input type="checkbox" class="form-control input-xxs" formControlName="mcq" /> </td>-->
+                  <!--<td>-->
+                    <!--<a (click)="saveLineHeader(i)"  class="btn bg-success-400 btn-rounded  btn-icon btn-xs-new"><i class="letter-icon">save</i> </a>-->
+                    <!--<a (click)="openLine(i)"  class="btn bg-danger-400 btn-rounded btn-icon btn-xs-new"><i class="letter-icon">open</i> </a>-->
+                  <!--</td>-->
+
+
+                <!--</tr>-->
+              <!--</ng-container>-->
+            <!--</table>-->
+          <!--</form>-->
+
+          <!--&lt;!&ndash;<pre>{{form.value | json}}</pre>&ndash;&gt;-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--</ng-container>-->
+
+<!-- popup -->
+<!--
+<div bsModal #lineModel="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" (onShow)="showEvent($event)">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
+      <form class="form-horizontal" [formGroup]="formGroup" (ngSubmit)="saveLine()">
+        <div class="modal-header bg-teal-300">
+          <button type="button" class="close" (click)="lineModel.hide()">&times;</button>
+          <h5 class="modal-title">
+            <span *ngIf="!loading && !processing">{{ popupHeaderTitle }}</span>
+            <span *ngIf="loading"><i class="icon-spinner2 spinner"></i> Please wait...</span>
+            <span *ngIf="processing"><i class="icon-spinner2 spinner"></i> Saving...</span>
+          </h5>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" formControlName="company_id" class="form-control input-xxs">
+          <fieldset class="content-group">
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Select Main Cluster <span class="text-danger">*</span>:</label>
+                <select class="form-control input-xxs" formControlName="group_id">
+                  <option value="">Select One ...</option>
+                  <option *ngFor="let cluster of clusterList$ | async" [value]="cluster.group_id" [selected]="cluster.group_id == formGroup.get('group_id').value">
+                    {{ cluster.group_name }}
+                  </option>
+                </select>
+                <span class="err">
+                  {{ formValidator.validate_field('group_id') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Company code <span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_code">
+                <div class="form-control-feedback" style="margin-top:15px" *ngIf="formGroup.get('company_code').status === 'PENDING'">
+                  <i class="icon-spinner2 spinner text-warning"></i>
+                </div>
+                <span class="err" *ngIf="formGroup.get('company_code').errors && formGroup.get('company_code').errors.remoteValidation">{{formGroup.get('company_code').errors.remoteValidation}}</span>
+                <span class="err"> {{ formValidator.validate_field('company_code') }} </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Company Name <span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_name">
+                <span class="err">
+                  {{ formValidator.validate_field('company_name') }}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Company Address 1 <span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_address_1">
+                <span class="err">
+                  {{ formValidator.validate_field('company_address_1') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Company Address 2:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_address_2">
+              </div>
+              <div class=" col-md-4">
+                <label>City <span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="city">
+                <span class="err">
+                  {{ formValidator.validate_field('city') }}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Country Code <span class="text-danger">*</span>:</label>
+                <ng-select [items]="country$ | async" placeholder="[Select Country]" [selectOnTab]="true" bindLabel="country_description"
+                  [loading]="countryLoading" [typeahead]="countryInput$" [(ngModel)]="selectedCountry" formControlName="country_code">
+                </ng-select>
+                <span class="err">
+                  {{ formValidator.validate_field('country_code') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Company Registration Number <span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_reg_no">
+                <span class="err">
+                  {{ formValidator.validate_field('company_reg_no') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Contact 1<span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_contact_1">
+                <span class="err">
+                  {{ formValidator.validate_field('company_contact_1') }}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Contact 2</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_contact_2">
+              </div>
+              <div class=" col-md-4">
+                <label>Fax :</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_fax">
+              </div>
+              <div class=" col-md-4">
+                <label>Email<span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_email">
+                <span class="err">
+                  {{ formValidator.validate_field('company_email') }}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Web</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_web">
+              </div>
+              <div class=" col-md-4">
+                <label>Remarks</label>
+                <input type="text" class="form-control input-xxs" formControlName="company_remarks">
+              </div>
+              <div class=" col-md-4">
+                <label>Vat Registration Number<span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="vat_reg_no">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-4">
+                <label>Tax Code<span class="text-danger">*</span>:</label>
+                <input type="text" class="form-control input-xxs" formControlName="tax_code">
+                <span class="err">
+                  {{ formValidator.validate_field('tax_code') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Default Currency<span class="text-danger">*</span>:</label>
+                <ng-select [items]="currency$ | async" placeholder="[Select Currency]" [selectOnTab]="true" bindLabel="currency_code"
+                  [loading]="currencyLoading" [typeahead]="currencyInput$" [(ngModel)]="selectedCurrency"
+                  formControlName="default_currency">
+                </ng-select>
+                <span class="err">
+                  {{ formValidator.validate_field('default_currency') }}
+                </span>
+              </div>
+              <div class=" col-md-4">
+                <label>Finance Month<span class="text-danger">*</span>:</label>
+                <select class="form-control input-xxs" formControlName="finance_month">
+                  <option value="">[ Select ]</option>
+                  <option value="Jan to Dec">Jan to Dec</option>
+                  <option value="March to April">March to April</option>
+                </select>
+                <span class="err">
+                  {{ formValidator.validate_field('finance_month') }}
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label>Select Section :</label>
+                <ng-select [items]="section$ | async" bindLabel="section_name" [multiple]="true" [hideSelected]="true"
+                  [typeahead]="sectionsInput$" [(ngModel)]="selectedSections" formControlName="sections">
+                </ng-select>
+              </div>
+              <div class="col-md-6">
+                <label>Select Department :</label>
+                <ng-select [items]="departments$ | async" bindLabel="dep_name" [multiple]="true" [hideSelected]="true"
+                  [loading]="departmentsLoading" [typeahead]="departmentsInput$" [(ngModel)]="selectedDepartments"
+                  formControlName="departments">
+                </ng-select>
+              </div>
+            </div>
 
 
+
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="companyModel.hide()"><b><i
+                class="icon-cross"></i></b> Close</button>
+          <button *ngIf="!loading && !processing" type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs"
+            [disabled]="formGroup.invalid">
+            <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+        </div>
+      </form>
     </div>
   </div>
+</div>-->
+
+
+<!-- FG / SFG popup -->
+
+<!--<div bsModal #fgSfgModel="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" (onShow)="showEvent($event)">-->
+  <!--<div class="modal-dialog modal-lg">-->
+    <!--<div class="modal-content">-->
+      <!--<form class="form-horizontal" [formGroup]="formGroup" (ngSubmit)="saveLine()">-->
+        <!--<div class="modal-header bg-teal-300">-->
+          <!--<button type="button" class="close" (click)="lineModel.hide()">&times;</button>-->
+          <!--<h5 class="modal-title">-->
+            <!--<span *ngIf="!loading && !processing">{{ popupHeaderTitle }}</span>-->
+            <!--<span *ngIf="loading"><i class="icon-spinner2 spinner"></i> Please wait...</span>-->
+            <!--<span *ngIf="processing"><i class="icon-spinner2 spinner"></i> Saving...</span>-->
+          <!--</h5>-->
+        <!--</div>-->
+        <!--<div class="modal-body">-->
+          <!--<input type="hidden" formControlName="company_id" class="form-control input-xxs">-->
+          <!--<fieldset class="content-group">-->
+            <!--<div class="row">-->
+              <!--<div class=" col-md-4">-->
+                <!--<label>Select Main Cluster <span class="text-danger">*</span>:</label>-->
+                <!--<select class="form-control input-xxs" formControlName="group_id">-->
+                  <!--<option value="">Select One ...</option>-->
+                  <!--<option *ngFor="let cluster of clusterList$ | async" [value]="cluster.group_id" [selected]="cluster.group_id == formGroup.get('group_id').value">-->
+                    <!--{{ cluster.group_name }}-->
+                  <!--</option>-->
+                <!--</select>-->
+                <!--<span class="err">-->
+                  <!--{{ formValidator.validate_field('group_id') }}-->
+                <!--</span>-->
+              <!--</div>-->
+              <!--<div class=" col-md-4">-->
+                <!--<label>Company code <span class="text-danger">*</span>:</label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="company_code">-->
+                <!--<div class="form-control-feedback" style="margin-top:15px" *ngIf="formGroup.get('company_code').status === 'PENDING'">-->
+                  <!--<i class="icon-spinner2 spinner text-warning"></i>-->
+                <!--</div>-->
+                <!--<span class="err" *ngIf="formGroup.get('company_code').errors && formGroup.get('company_code').errors.remoteValidation">{{formGroup.get('company_code').errors.remoteValidation}}</span>-->
+                <!--<span class="err"> {{ formValidator.validate_field('company_code') }} </span>-->
+              <!--</div>-->
+              <!--<div class=" col-md-4">-->
+                <!--<label>Company Name <span class="text-danger">*</span>:</label>-->
+                <!--<input type="text" class="form-control input-xxs" formControlName="company_name">-->
+                <!--<span class="err">-->
+                  <!--{{ formValidator.validate_field('company_name') }}-->
+                <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!---->
+          <!--</fieldset>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+          <!--<button type="button" class="btn bg-teal-400 btn-labeled btn-danger btn-xs" (click)="companyModel.hide()"><b><i-->
+                <!--class="icon-cross"></i></b> Close</button>-->
+          <!--<button *ngIf="!loading && !processing" type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs"-->
+            <!--[disabled]="formGroup.invalid">-->
+            <!--<b><i class="icon-floppy-disk"></i></b> Save</button>-->
+
+        <!--</div>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!-- FG / SFG popup -->
+
+<!--<div bsModal #fgSfgModel="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" (onShow)="showEvent($event)">-->
+  <!--<div class="modal-dialog modal-lg">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="panel-body">-->
+        <!--<form [formGroup]="form">-->
+          <!--<table class="table display datatable-basic">-->
+            <!--<thead><tr> <th class="text-center">PACK </th><th class="text-center">ITEM CODE </th><th class="text-center"> COMPONENT </th><th class="text-center">  COLOR </th><th class="text-center">  Action </th></tr></thead>-->
+            <!--<ng-container formArrayName="roll_info">-->
+              <!--<tr *ngFor="let ctrl of form.get('roll_info')['controls']; let i = index" [formGroupName]="i">-->
+                <!--<td><input type="text" class="form-control" [readonly]="true" formControlName="item_code"></td>-->
+                <!--<td><input type="text" class="form-control" formControlName="lot"></td>-->
+                <!--<td><input type="text" class="form-control" formControlName="roll"></td>-->
+                <!--<td><input type="text" class="form-control" formControlName="roll"></td>-->
+                <!--<td><a (click)="deleteline(i)"  class="btn bg-danger-400 btn-rounded btn-icon btn-xs"><i class="letter-icon">X</i> </a></td>-->
+
+              <!--</tr>-->
+            <!--</ng-container>-->
+          <!--</table>-->
+        <!--</form>-->
+
+        <!--&lt;!&ndash;<pre>{{form.value | json}}</pre>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

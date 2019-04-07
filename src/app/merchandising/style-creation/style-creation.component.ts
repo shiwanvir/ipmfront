@@ -70,26 +70,21 @@ export class StyleCreationComponent implements OnInit {
   DivisionInput$ = new Subject<string>();
   selectedDivision:Division
 
-  // private LOGO = require("./assets/images/style/style.jpg");
-  // private imgSrc = '/storage/styleImage/15.png';
-  public imgSrc = 'http://surface/assets/styleImage/22.png';
-  // imgSrc: string = "/assets/images/style/style.jpg";
+
+  public imgSrc = 'http://surface/assets/styleImage/dif.png';
   serverUrl = AppConfig.apiServerUrl();
   apiUrl = AppConfig.apiUrl();
   constructor(private fb:FormBuilder , private http:HttpClient) {
-    // const controls = this.items.map(c => new FormControl(false));
-    // controls[0].setValue(true);
-
 
     this.formGroup = this.fb.group({
-      customer : [],
-      ProductCategory : [],
-      ProductType : [],
-      ProductFeature : [],
-      ProductSilhouette : [],
+      customer : [null , [Validators.required]],
+      ProductCategory :[null , [Validators.required]],
+      ProductType : [null , [Validators.required]],
+      ProductFeature : [null , [Validators.required]],
+      ProductSilhouette : [null , [Validators.required]],
       style_no : [null , [Validators.required]],
       style_description: [null , [Validators.required]],
-      division: [],
+      division: [null , [Validators.required]],
       Remarks: [null , [Validators.required]],
       // items: new FormArray(controls, minSelectedCheckboxes(1)),
       avatar: null,
@@ -99,13 +94,6 @@ export class StyleCreationComponent implements OnInit {
 
   }
 
-
-  // selectedFile: File;
-  //
-  // onFileChanged(event) {
-  //   this.selectedFile = event.target.files[0]
-  //   console.log( event.target.files);
-  // }
 
 
   ngOnInit() {
@@ -129,7 +117,7 @@ export class StyleCreationComponent implements OnInit {
       serverSide: true,
       ajax: {
         dataType : 'JSON',
-        "url": this.apiUrl + "merchandising/style?type=datatable"
+        "url": this.apiUrl + "merchandising/get-style?type=datatable"
       },
       columns: [
         {
@@ -185,8 +173,6 @@ export class StyleCreationComponent implements OnInit {
             ))
         )
     );
-    // this.customer$ = this.http.get<Array<any>>(this.serverUrl + 'api/getCustomer')
-    //     .pipe(map(data => data.data))
   }
 
   getProductCategory() {
@@ -202,8 +188,6 @@ export class StyleCreationComponent implements OnInit {
             ))
         )
     );
-    // this.customer$ = this.http.get<Array<any>>(this.serverUrl + 'api/getCustomer')
-    //     .pipe(map(data => data.data))
   }
 
   getDivision() {
@@ -213,7 +197,7 @@ export class StyleCreationComponent implements OnInit {
             debounceTime(200),
             distinctUntilChanged(),
             tap(() => this.DivisionLoading = true),
-            switchMap(term => this.http.get<customer[]>(this.serverUrl + 'api/getDivision?customer_id='+this.formGroup.get('customer').value.customer_id,{params:{search:term}}).pipe(
+            switchMap(term => this.http.get<customer[]>(this.serverUrl + 'api/getDivision?type=auto&customer_id='+this.formGroup.get('customer').value.customer_id,{params:{search:term}}).pipe(
                 catchError(() => of([])), // empty list on error
                 tap(() => this.DivisionLoading = false)
             ))
@@ -235,8 +219,6 @@ export class StyleCreationComponent implements OnInit {
             ))
         )
     );
-    // this.customer$ = this.http.get<Array<any>>(this.serverUrl + 'api/getCustomer')
-    //     .pipe(map(data => data.data))
   }
 
   getProductFeature() {
@@ -253,8 +235,7 @@ export class StyleCreationComponent implements OnInit {
             ))
         )
     );
-    // this.customer$ = this.http.get<Array<any>>(this.serverUrl + 'api/getCustomer')
-    //     .pipe(map(data => data.data))
+
   }
 
 
@@ -285,9 +266,7 @@ export class StyleCreationComponent implements OnInit {
             });
 
             this.formGroup.reset();
-            // this.imgSrc = "/assets/images/style/style1.jpg";
-            this.imgSrc = "http://surface/assets/styleImage/"+data['image'];
-            // imgSrc:  "/assets/images/style/style1.jpg";
+            this.imgSrc = AppConfig.StayleImage()+data['image'];
             this.sectionModel.hide();
           }
           this.reloadTable();
@@ -298,6 +277,7 @@ export class StyleCreationComponent implements OnInit {
 
 
   onFileChange(event) {
+    console.log(event.target.files,'aaa');
     let reader = new FileReader();
     if(event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
@@ -314,7 +294,6 @@ export class StyleCreationComponent implements OnInit {
         })
       };
     }
-    // console.log(this.formGroup.getRawValue())
   }
 
   edit(id) {
@@ -323,8 +302,7 @@ export class StyleCreationComponent implements OnInit {
         .subscribe(data => {
           if(data['status'] == '1')
           {
-            // console.log(data)
-             // this.customer$=(data['customer']);
+             console.log(data)
             this.sectionModel.show()
             this.modelTitle = "Update Action"
             this.formGroup.setValue({
@@ -342,17 +320,8 @@ export class StyleCreationComponent implements OnInit {
               avatarHidden:null
 
             })
-
-            // this.formGroup = this.fb.group({
-            //
-            //   customer : data['customer'],
-            //   division: data['division'],
-            //
-            // })
-
-             // this.formGroup.get('action_name').disable()
             this.saveStatus = 'UPDATE'
-            this.imgSrc = "http://surface/assets/styleImage/"+data['image'];
+            this.imgSrc = AppConfig.StayleImage()+data['image'];
 
 
           }
@@ -360,7 +329,7 @@ export class StyleCreationComponent implements OnInit {
         })
   }
 
-  delete(id) { //deactivate payment term
+  delete(id) {
     AppAlert.showConfirm({
           'text' : 'Do you want to deactivate selected Action?'
         },
@@ -384,36 +353,16 @@ export class StyleCreationComponent implements OnInit {
   }
 
   showEvent(event){ //show event of the bs model
-    this.imgSrc = "http://surface/assets/styleImage/22.png";
+    this.imgSrc = AppConfig.StayleImage()+'dif.png';
     this.formGroup.reset();
     this.modelTitle = "New Action"
     this.saveStatus = "SAVE"
   }
 
-//https://nehalist.io/uploading-files-in-angular2/
-//   items = [
-//     {'': '20', A: "v", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '22', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '24', A: "", AA: "", B: " ", C: "",D: "",DD: "v",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '26', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '28', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "v",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '30', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '32', A: "", AA: "v", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '34', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '36', A: "v", AA: "", B: " ", C: "v",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '38', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "v",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '40', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '42', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "v",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '44', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '46', A: "", AA: "v", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '48', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//     {'': '50', A: "", AA: "", B: " ", C: "",D: "",DD: "",E: "",F: "",G: "",H: "",I: "",J: "",S: "",M: "",L: "",XL: "",XXL: "",'3XL': "",'4XL': "",'5XL': "",U: ""},
-//
-//   ];
+
 
 }
 function minSelectedCheckboxes(min = 1) {
-  // console.log('ssss');
   const validator: ValidatorFn = (formArray: FormArray) => {
     const totalSelected = formArray.controls
         .map(control => control.value)

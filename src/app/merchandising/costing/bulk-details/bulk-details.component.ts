@@ -297,7 +297,7 @@ export class BulkDetailsComponent implements OnInit {
 
 
         }
-        if(title =='Copy'){//console.log('aaa',this.dataset.item_id);
+        if(title =='Copy'){
           if( typeof this.dataset[0] === "undefined"){
 
             // if(this.dataset.item_id !=0){
@@ -327,7 +327,6 @@ export class BulkDetailsComponent implements OnInit {
 
         }
         if(title =='Delete'){
-          // console.log(this.dataset[TD.row].blkHead);
           if(this.dataset[TD.row].item_id !=0){
             const hotInstance = this.hotRegisterer.getInstance(this.instance);
             this.http.delete(this.url + '/'+this.dataset[TD.row].item_id)
@@ -349,7 +348,6 @@ export class BulkDetailsComponent implements OnInit {
         }
 
         const hotInstance = this.hotRegisterer.getInstance(this.instance);
-        // console.log(this.dataset[source[0][0]])
 
 if(source[0][1] =='main_item_type'){
   $.ajax({
@@ -408,21 +406,27 @@ if(source[0][1] =='main_item_type'){
 
         }
 
+        if(source[0][1] =='net_consumption'){
+
+          var valDataSet;
+          if( typeof this.dataset[0] === "undefined"){
+            valDataSet=this.dataset;
+          }else{console.log(source[0][1],'ddd');
+            valDataSet=this.dataset[source[0][0]];
+          }
+          hotInstance.setDataAtCell(source[0][0],hotInstance.propToCol('gross_consumption'),this.lineGrossConsumption(valDataSet));
+
+        }
+
 
       },
 
       manualColumnResize: true,
       autoColumnSize : true,
       rowHeaders: true,
-      // height: 150,
-      // stretchH: 'all',
-      // selectionMode: 'range',
-      /*columnSorting: true,*/
       className: 'htCenter htMiddle',
       readOnly: true,
-      // rowHeaders: true,
       colHeaders: true,
-      // width: 1000,
       fixedColumnsLeft: 4,
       manualColumnMove: true,
       afterInit: function(){
@@ -438,10 +442,12 @@ if(source[0][1] =='main_item_type'){
   }
 
   lineTotalCost(array){
-
     return ((array.gross_consumption*array.unit_price)+parseFloat(array.freight_charges)+parseFloat(array.finance_charges));
-
   }
+
+  lineGrossConsumption(array){
+    return ((array.net_consumption-array.wastage));
+}
 
   totalCost(){
     this.category=[];

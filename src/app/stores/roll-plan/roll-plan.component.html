@@ -1,0 +1,94 @@
+<form class="form-horizontal" [formGroup]="formGroup"  (ngSubmit)="saveStyle()">
+  <div class="panel panel-flat">
+    <div class="panel-heading">
+      <!--<h5 class="panel-title">Style Creation</h5>-->
+    <h5 class="panel-title">Roll Plan</h5>
+      <div class="heading-elements">
+        <ul class="icons-list">
+          <li><a data-action="collapse"></a></li>
+          <li><a data-action="reload"></a></li>
+          <li><a data-action="close"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <label>PO#</label>
+
+          </div>
+          <div class="col-md-4">
+            <input type="text"  formControlName="style_no"  value="{{styleValue}}" #style_no class="form-control input-xxs">
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn bg-teal-400 btn-labeled btn-success btn-xs" (click)="getPoData(style_no.value)" >
+              <b><i class="icon-search4"></i></b> Search</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table display datatable-basic" id="main_po_tbl">
+              <thead>
+              <tr>
+                <th class="text-center">MATERIAL CODE</th>
+                <!--<th>DESCRIPTION</th>-->
+                <!--<th>SO#</th>-->
+                <th>SC NO</th>
+                <th>LINE NO</th>
+                <th>COLOR</th>
+                <th>UNIT PRICE</th>
+                <!--<th>COMMENTS</th>-->
+                <th>UOM</th>
+                <th>REQUEST QTY</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+  </div>
+    <div class="panel-body">
+      <div [innerHtml]="htmlToAdd" id="po_details" class="col-md-12 html">
+
+      </div>
+
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="form">
+      <table class="table display datatable-basic">
+        <thead><tr> <th class="text-center">DELETE </th><th class="text-center">ITEM CODE </th><th class="text-center"> LOT # </th><th class="text-center">  ROLL # </th><th class="text-center">  QTY (Y) </th><th class="text-center">  QTY (M) </th><th class="text-center">  SPECIAL COMMENTS </th></tr></thead>
+        <ng-container formArrayName="roll_info">
+          <tr *ngFor="let ctrl of form.get('roll_info')['controls']; let i = index" [formGroupName]="i">
+            <td><a (click)="deleteline(i)"  class="btn bg-danger-400 btn-rounded btn-icon btn-xs"><i class="letter-icon">X</i> </a></td>
+            <td><input type="text" class="form-control" [value]="itemCone" [readonly]="true" formControlName="item_code"></td>
+            <td><input type="text" class="form-control" formControlName="lot"></td>
+            <td><input type="text" class="form-control" formControlName="roll"></td>
+            <td><input type="text" class="form-control" formControlName="qty_y" (keyup)="onKey($event,i)" value="{{valuesY[i]}}"></td>
+            <td><input type="text" class="form-control" formControlName="qty_m" (keyup)="onKeyY($event,i)" value="{{values[i]}}"></td>
+            <td><input type="text" class="form-control" formControlName="comment"></td>
+          </tr>
+        </ng-container>
+      </table>
+    </form>
+
+    <!--<pre>{{form.value | json}}</pre>-->
+  </div>
+  <!--<div class="one" [innerHtml]="htmlToAdd"></div>-->
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn bg-teal-400 btn-labeled btn-success btn-xs" >
+      <b><i class="icon-floppy-disk"></i></b> Save</button>
+
+  </div>
+</form>
